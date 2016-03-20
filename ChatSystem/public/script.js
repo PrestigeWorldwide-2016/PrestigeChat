@@ -1,7 +1,6 @@
 
 $(document).ready(function() {
 
-
 var   submitPhase1 = 1100,
       submitPhase2 = 400,
       logoutPhase1 = 800,
@@ -24,20 +23,19 @@ var   submitPhase1 = 1100,
     socket.emit('login', userinfo, function (err) {
 
       if (err) {
-        console.log("That was incorrect Account info");
-      //  location.reload();
+        console.log(err);
+        //location.reload();
       }
       else {
-
     setTimeout(function() {
       setTimeout(function() {
         $app.show();
-        $app.css("top");
-        $app.addClass("active");
+//        $app.css("top");
+  //      $app.addClass("active");
       }, submitPhase2 - 70);
       setTimeout(function() {
         $login.hide();
-        $login.addClass("inactive");
+  //      $login.addClass("inactive");
         }, submitPhase2);
 
       }, submitPhase1);

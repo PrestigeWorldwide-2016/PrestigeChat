@@ -22,14 +22,14 @@ module.exports.run = function (worker) {
   */
   scServer.on('connection', function (socket) {
 
-    socket.on('login', function (userinfoData) {
+    socket.on('login', function (userinfoData, respond) {
       console.log(userinfoData.Username + ' connected');
-
+      respond();
     });
 
     socket.on('disconnect', function () {
-      clearInterval(interval);
+    console.log('User disconnected');
     });
-    
+
   });
 };
