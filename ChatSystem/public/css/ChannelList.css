@@ -1,0 +1,56 @@
+/*
+Css file for the style of the channel/follower list that is to the left of the main chat
+window.
+*/
+
+.ChannelContainer {
+  margin: 0vh 1vw ;
+  position: absolute;
+  width: 15vw;
+  background-color: #FFFFFF;
+  border: 1px solid #EEEEEE;
+  height: 80vh;
+}
+.ChannelContainer ul {
+  margin: 0;
+  padding: 0;
+}
+.ChannelContainer ul>li {
+  list-style: none;
+  padding: 20px;
+  border-bottom: 1px solid #EEEEEE;
+}
+.ChannelContainer ul>li:nth-child(odd) {
+  background: #F6F5F6;
+}
+.ChannelName {
+  height: 75vh;
+  overflow-y: scroll;
+}
+
+.ListActions {
+  position: absolute;
+  bottom: 0;
+  background-color: #2ecc71;
+  width: 100%;
+  border-top: 1px solid #EEEEEE;
+}
+.ListActions input {
+  border: 0;
+  margin: 0;
+  font-size: 1em;
+  padding: 1.5vh 1vw;
+  width: 15vw;
+  float: left;
+}
+.ListActions button {
+  border: 0;
+  margin: 0;
+  width: 10vw;
+  text-align: center;
+  font-size: 1em;
+  padding: 1.5vh 1vw;
+  float: left;
+  background-color: #2ecc71;
+  color: #FFFFFF;
+}
