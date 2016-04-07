@@ -55,7 +55,29 @@ function ConnectUser() {
           console.log(username + ' Connected to server');
           });
 
-      }
+
+          var channelName = "BigGroup";
+          var chatChannel = socket.subscribe(channelName);
+          chatChannel.on('subscribeFail', function(err) {
+          console.log('Failed to subscribe to ' + channelName + ' channel due to error: ' + err);
+            });
+          console.log("This is the connected channelName: " + channelName);
+
+
+          $('#MessageForm').unbind('submit').bind('submit',function() {
+           if($('#message').val() != '') {
+             socket.emit('chat',{ UserMessage: username + ":  " + $('#message').val(), UserChannel: channelName});
+               }
+             $('#message').val('');
+             return false;
+           });
+
+           chatChannel.watch(function (data) {
+             $('#messages-list').append($('<li>').text(data));
+             $('div#messages-div').scrollTop($('div#messages-div')[0].scrollHeight)
+             });
+
+    }
 
   });
 

@@ -31,5 +31,14 @@ module.exports.run = function (worker) {
     console.log('User disconnected');
     });
 
+
+    socket.on('chat', function (data) {
+      scServer.global.publish(data.UserChannel, data.UserMessage);
+      var thisChannel = data.UserChannel;
+      var thisMessage = data.UserMessage;
+      console.log(thisMessage + ' ----- was posted inside the channel: ' + thisChannel);
+    });
+
+
   });
 };
