@@ -15,12 +15,12 @@ var   submitPhase1 = 1100,
     var socket = socketCluster.connect();
     var username = $('#Username').val();
     var userpass = $('#Password').val();
-    var userinfo = {
-      Username: username,
-      UserPass: userpass
+    var user = {
+      uName: username,
+      password: userpass
     };
 
-    socket.emit('login', userinfo, function (err) {
+    socket.emit('login', user, function (err) {
 
       if (err) {
         console.log(err);
