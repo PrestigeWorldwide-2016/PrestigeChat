@@ -24,16 +24,14 @@ module.exports.run = function (worker) {
   scServer.on('connection', function (socket) {
 
     socket.on('login', function (user, respond) {
-      console.log(user.uName + "Connected");
+      console.log(user.uName + " Connected");
       mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
           var accountsCollection = db.collection('Accounts');
           accountsCollection.find(user).count(function (err, count) {
             console.log(count);
             if (count == 0) {
               respond('Login failed');
-
             }
-
             else {
               respond();
               console.log('Info is valid.');
