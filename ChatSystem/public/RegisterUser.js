@@ -25,11 +25,12 @@ $(document).ready(function() {
 
       if (err) {
         console.log(err);
-        //location.reload();
+        window.prompt("We're Sorry! That Username or Email is already registered.")
+        location.reload();
       }
       else {
         window.prompt("Successfully Registered You!!!");
-        location.reload("/index.html");
+        location.href = "/";
       }
     });
   });
