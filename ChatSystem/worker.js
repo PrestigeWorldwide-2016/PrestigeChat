@@ -23,6 +23,7 @@ module.exports.run = function (worker) {
   */
   scServer.on('connection', function (socket) {
 
+
     socket.on('login', function (user, respond) {
       console.log(user.uName + " Connected");
       mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
@@ -41,6 +42,7 @@ module.exports.run = function (worker) {
       });
     });
 
+
     socket.on('disconnect', function () {
     console.log('User disconnected');
     });
@@ -52,6 +54,28 @@ module.exports.run = function (worker) {
       var thisMessage = data.UserMessage;
       console.log(thisMessage + ' ----- was posted inside the channel: ' + thisChannel);
     });
+
+
+    socket.on('register', function (user, respond) {
+      console.log(user.uName + " Registering...");
+      mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
+          var accountsCollection = db.collection('Accounts');
+          accountsCollection.find( { $or: [ { "uName": user.uName }, {"email": user.email } ] } )
+          .count(function (err, count) {
+            console.log(count);
+            if (count == 0) {
+              accountsCollection.insertOne(user);
+              respond();
+            }
+            else {
+              respond("User Already Exists!");
+              console.log('User Already Exists!');
+            }
+
+          });
+      });
+    });
+
 
 
   });
