@@ -2,10 +2,10 @@
 <html >
   <head>
     <meta charset="UTF-8">
-    <title>Log-in</title>
+    <title>Registration</title>
 
     <link rel='stylesheet prefetch' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/registration_style.css">
     <link rel="stylesheet" type="text/css" href="css/styleChat.css">
     <link rel="stylesheet" type="text/css" href="css/ChannelList.css">
     <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Open+Sans'>
@@ -13,47 +13,18 @@
 
   <body>
 
-    <div class="login-card">
+    <div class="registration-card">
     <h1>Log-in</h1><br>
-  <div class="Login_Form">
+  <div class="Registration_Form">
+    <input type="text" name="fname" id="First Name" placeholder="First Name">
+    <input type="text" name="lname" id="Last Name" placeholder="Last Name">
+    <input type="text" name="email" id="Email" placeholder="Email">
     <input type="text" name="user" id="Username" placeholder="Username">
     <input type="password" name="pass" id="Password" placeholder="Password">
-    <button type="button" class="login__submit">Sign in</button>
+    <button type="button" class="register__submit">Registrationer</button>
 <!--    <input type="submit" name="login" class="login login-submit" value="login"> -->
   </div>
-
-  <div class="login-help">
-    <a href="#">Register</a> • <a href="#">Forgot Password</a>
-  </div>
 </div>
-
-
-        <!-- Messaging Window -->
- <div class="app">
-   <div class="ChannelContainer">
-     <div class="ChannelName">
-       <ul id="channels-list"></ul>
-     </div>
-     <div class="ListActions">
-       <form>
-         <input id="ChannelSearch" autocomplete="off" placeholder="Search">
-         <button>Search</button>
-       </form>
-     </div>
-   </div>
-
- <div class="container">
-   <div class="messages" id="messages-div">
-     <ul id="messages-list"></ul>
-   </div>
-   <div class="actions">
-     <form id="MessageForm">
-       <input id="message" autocomplete="off" placeholder="Type a message...">
-       <button class="message-button">Send</button>
-     </form>
-   </div>
- </div>
- </div>
 
 
 <!-- <div id="error"><img src="https://dl.dropboxusercontent.com/u/23299152/Delete-icon.png" /> Your caps-lock is on.</div> -->
