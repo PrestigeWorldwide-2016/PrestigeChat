@@ -2,13 +2,13 @@
 
 $(document).ready(function() {
 
-    $(document).on("click", ".register__submit", function(e) {
+    $(document).on("click", ".registration__submit", function(e) {
     var that = this;
 
 
     var socket = socketCluster.connect();
-    var fisrtName = $('#First_Name').val();
-    var lastName = $('#Last_name').val();
+    var fisrtName = $('#FirstName').val();
+    var lastName = $('#LastName').val();
     var email = $('#Email').val();
     var username = $('#Username').val();
     var userpass = $('#Password').val();
@@ -28,7 +28,8 @@ $(document).ready(function() {
         //location.reload();
       }
       else {
-        //Redirect to login page if it succesful in saving to DB
+        window.prompt("Successfully Registered You!!!");
+        location.reload("/index.html");
       }
     });
   });
