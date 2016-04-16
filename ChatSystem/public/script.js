@@ -65,7 +65,15 @@ $(document).ready(function() {
                 return false;
             });
 
-            
+            socket.emit('getChatMessages', function(err) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    // receive an array of chat channel and last chat?
+                    $()
+                }
+                        
+            });
             
             chatChannel.watch(function (data) {
                  $('#messages-list').append($('<li>').text(data));
