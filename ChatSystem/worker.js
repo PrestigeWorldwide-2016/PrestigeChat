@@ -5,75 +5,22 @@ var path = require('path');
 var mongo = require('mongodb').MongoClient;
 
 module.exports.run = function (worker) {
-  console.log('   >> Worker PID:', process.pid);
+    console.log('   >> Worker PID:', process.pid);
+    var app = require('express')();
 
-  var app = require('express')();
+    var httpServer = worker.httpServer;
+    var scServer = worker.scServer;
 
-  var httpServer = worker.httpServer;
-  var scServer = worker.scServer;
+    app.use(serveStatic(path.resolve(__dirname, 'public')));
 
-  app.use(serveStatic(path.resolve(__dirname, 'public')));
+    httpServer.on('request', app);
 
-  httpServer.on('request', app);
-
-  var count = 0;
-
-  /*
+    var count = 0;
+    /*
     In here we handle our incoming realtime connections and listen for events.
-  */
-  scServer.on('connection', function (socket) {
-    socket.on('login', function (user, respond) {
-      console.log(user.uName + " Connected");
-      mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
-          var accountsCollection = db.collection('Accounts');
-          accountsCollection.find(user).count(function (err, count) {
-            console.log(count);
-            if (count == 0) {
-              respond('Login failed');
-            }
-            else {
-              respond();
-              console.log('Info is valid.');
-            }
-
-          });
-      });
-    });
-
-    socket.on('disconnect', function () {
-        console.log('User disconnected');
-    });
-
-    socket.on('chat', function (data) {
-      scServer.global.publish(data.UserChannel, data.UserMessage);
-      var thisChannel = data.UserChannel;
-      var thisMessage = data.UserMessage;
-      console.log(thisMessage + ' ----- was posted inside the channel: ' + thisChannel);
-    });
-
-
-    socket.on('register', function (user, respond) {
-      console.log(user.uName + " Registering...");
-      mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
-          var accountsCollection = db.collection('Accounts');
-          accountsCollection.find( { $or: [ { "uName": user.uName }, {"email": user.email } ] } )
-          .count(function (err, count) {
-            console.log(count);
-            if (count == 0) {
-              accountsCollection.insertOne(user);
-              respond();
-            }
-            else {
-              respond("User Already Exists!");
-              console.log('User Already Exists!');
-            }
-
-          });
-      });
-    });
-
-        socket.on('getChatMessages', function(){
-            // open a connection to the database
+    */
+    scServer.on('connection', function (socket) {
+        socket.on('login', function (user, respond) {
             console.log(user.uName + " Connected");
             mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
                 var accountsCollection = db.collection('Accounts');
@@ -81,21 +28,46 @@ module.exports.run = function (worker) {
                     console.log(count);
                     if (count == 0) {
                         respond('Login failed');
-                    }
-                    else {
+                    } else {
                         respond();
                         console.log('Info is valid.');
                     }
                 });
             });
         });
-        
-        // unwrap the contents
-          
-            // use watch to append to the list...?
-            chatChannel.watch(function (data) {
-                $('#channels-list').append($('<li>').text(data));
-//                $('div#messages-div').scrollTop($('div#messages-div')[0].scrollHeight)
+
+        socket.on('disconnect', function () {
+            console.log('User disconnected');
+        });
+
+        socket.on('chat', function (data) {
+            scServer.global.publish(data.UserChannel, data.UserMessage);
+            var thisChannel = data.UserChannel;
+            var thisMessage = data.UserMessage;
+            console.log(thisMessage + ' ----- was posted inside the channel: ' + thisChannel);
+        });
+
+        socket.on('register', function (user, respond) {
+            console.log(user.uName + " Registering...");
+            mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers',
+                function (err, db) {
+                    var accountsCollection = db.collection('Accounts');
+                        accountsCollection.find({ 
+                            $or: [{ "uName": user.uName }, 
+                                  { "email": user.email }] 
+                        }).count(function (err, count) {
+                            console.log(count);
+                            if (count == 0) {
+                                accountsCollection.insertOne(user);
+                                respond();
+                            } else {
+                                respond("User Already Exists!");
+                                console.log('User Already Exists!');
+                            }
+                        });
+            });
+        });
+
             });
         });
     });
