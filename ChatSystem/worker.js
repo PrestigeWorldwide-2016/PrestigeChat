@@ -68,6 +68,15 @@ module.exports.run = function (worker) {
             });
         });
 
+        socket.on('getChatMessages', function(){
+            // open a connection to the database
+            console.log(user.uName + " Connected");
+            mongo.connect('mongodb://prestigedbuser:dbpassword@ds021010.mlab.com:21010/prestigechat', function (err, db) {
+                var chatCollection = db.collection('chatList');
+                // how to load this into an array? 
+                chatCollection.______ {
+                    // return the array of data needed to populate letft panel to the client
+                });
             });
         });
     });
