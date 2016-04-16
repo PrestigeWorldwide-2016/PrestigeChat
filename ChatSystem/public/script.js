@@ -59,7 +59,10 @@ $(document).ready(function() {
 
             $('#MessageForm').unbind('submit').bind('submit',function() {
                 if($('#message').val() != '') {
-                    socket.emit('chat',{ UserMessage: username + ":  " + $('#message').val(), UserChannel: channelName});
+                    socket.emit('chat', {
+                        UserMessage: username + ":  " + $('#message').val(), 
+                        UserChannel: channelName
+                    });
                 }
                 $('#message').val('');
                 return false;
