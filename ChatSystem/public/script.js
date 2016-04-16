@@ -74,6 +74,10 @@ $(document).ready(function() {
                 } else {
                     // receive an array of chat channel and last chat?
                     $()
+                    
+                    // unwrap the array 
+                    
+                    //append to the list of chats
                 }
                         
             });
