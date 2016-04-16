@@ -22,8 +22,6 @@ module.exports.run = function (worker) {
     In here we handle our incoming realtime connections and listen for events.
   */
   scServer.on('connection', function (socket) {
-
-
     socket.on('login', function (user, respond) {
       console.log(user.uName + " Connected");
       mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
@@ -42,11 +40,9 @@ module.exports.run = function (worker) {
       });
     });
 
-
     socket.on('disconnect', function () {
-    console.log('User disconnected');
+        console.log('User disconnected');
     });
-
 
     socket.on('chat', function (data) {
       scServer.global.publish(data.UserChannel, data.UserMessage);
@@ -76,7 +72,31 @@ module.exports.run = function (worker) {
       });
     });
 
-
-
-  });
+        socket.on('getChatMessages', function(){
+            // open a connection to the database
+            console.log(user.uName + " Connected");
+            mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
+                var accountsCollection = db.collection('Accounts');
+                accountsCollection.find(user).count(function (err, count) {
+                    console.log(count);
+                    if (count == 0) {
+                        respond('Login failed');
+                    }
+                    else {
+                        respond();
+                        console.log('Info is valid.');
+                    }
+                });
+            });
+        });
+        
+        // unwrap the contents
+          
+            // use watch to append to the list...?
+            chatChannel.watch(function (data) {
+                $('#channels-list').append($('<li>').text(data));
+//                $('div#messages-div').scrollTop($('div#messages-div')[0].scrollHeight)
+            });
+        });
+    });
 };
