@@ -73,7 +73,6 @@ $(document).ready(function() {
                     console.log(err);
                 } else {
                     // receive an array of chat channel and last chat?
-                    $()
                     
                     // unwrap the array 
                     
