@@ -4,6 +4,38 @@ var serveStatic = require('serve-static');
 var path = require('path');
 var mongo = require('mongodb').MongoClient;
 
+
+/*
+-----------------------------------------------------------------------------
+Below is an exact copy of a User Account in the Databse to use as a reference.
+"_id" is something you can ignore, it's just an automatic primary key.
+-----------------------------------------------------------------------------
+
+{
+    "_id": {
+        "$oid": "570ade39e4b050965a586f62"
+    },
+    "fName": "Austin",
+    "lName": "Marsella",
+    "uName": "amarsella",
+    "password": "apassword",
+    "email": "amarsella5700@gmail.com",
+    "adminCode": "0",
+    "adminStatus": "false",
+    "Departments": [
+        "General",
+        "Marketing",
+        "Engineering",
+        "Accounting",
+        "HR",
+        "RD"
+    ]
+}
+
+
+*/
+
+
 module.exports.run = function (worker) {
   console.log('   >> Worker PID:', process.pid);
 
