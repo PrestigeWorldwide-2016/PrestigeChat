@@ -81,6 +81,7 @@ $(document).ready(function() {
                         
             });
             
+			var userCred = { uName: username };
             chatChannel.watch(function (data) {
                  $('#messages-list').append($('<li>').text(data));
                  // update the channel panel 
