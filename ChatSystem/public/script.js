@@ -68,19 +68,6 @@ $(document).ready(function() {
                 return false;
             });
 
-            socket.emit('getChatMessages', function(err) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    // receive an array of chat channel and last chat?
-                    
-                    // unwrap the array 
-                    
-                    //append to the list of chats
-                }
-                        
-            });
-            
 			
 			var userCred = { uName: username };
             socket.emit('getChatMessages', userCred);
