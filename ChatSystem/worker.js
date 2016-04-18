@@ -68,16 +68,20 @@ module.exports.run = function (worker) {
             });
         });
 
-        socket.on('getChatMessages', function(){
+        socket.on('getChatMessages', function(userCredentials){
             // open a connection to the database
             console.log(user.uName + " Connected");
             mongo.connect('mongodb://prestigedbuser:dbpassword@ds021010.mlab.com:21010/prestigechat', function (err, db) {
                 var chatCollection = db.collection('chatList');
-                // how to load this into an array? 
-                chatCollection.______ {
-                    // return the array of data needed to populate letft panel to the client
-                });
-            });
-        });
-    });
+				var stream = chatCollection.find(userCredentials).stream();
+				stream.on('data', function(listOfFind) {
+					// wrap listOfFind in an array
+					var arrayOfCollections = [];
+					while(chatCollection.hasNext()) {
+					   arrayOfCollections.push(chatCollection.next());
+					}
+					socket.emit('chatPanelData', arrayOfCollections);
+				});
+			});
+		});
 };
