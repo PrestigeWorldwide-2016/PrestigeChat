@@ -82,6 +82,7 @@ $(document).ready(function() {
             });
             
 			var userCred = { uName: username };
+            socket.emit('getChatMessages', userCred);
             chatChannel.watch(function (data) {
                  $('#messages-list').append($('<li>').text(data));
                  // update the channel panel 
