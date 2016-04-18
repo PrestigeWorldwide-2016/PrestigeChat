@@ -70,8 +70,7 @@ module.exports.run = function (worker) {
 
         socket.on('getChatMessages', function(userCredentials){
             // open a connection to the database
-            console.log(user.uName + " Connected");
-            mongo.connect('mongodb://prestigedbuser:dbpassword@ds021010.mlab.com:21010/prestigechat', function (err, db) {
+         	mongo.connect('mongodb://prestigedbuser:dbpassword@ds021010.mlab.com:21010/prestigechat', function (err, db) {
                 var chatCollection = db.collection('chatList');
 				var stream = chatCollection.find(userCredentials).stream();
 				stream.on('data', function(listOfFind) {
