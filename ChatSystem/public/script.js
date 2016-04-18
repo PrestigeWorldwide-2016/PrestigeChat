@@ -81,8 +81,18 @@ $(document).ready(function() {
                         
             });
             
+			
 			var userCred = { uName: username };
             socket.emit('getChatMessages', userCred);
+// ---------------------------------------------	
+			socket.on('chatPanelData', function(data) {
+				var arrayOfChatPanels = data;
+				arrayOfChatPanels.forEach(function(item) {
+					
+					$('#channels-list').append('<li> class="DepartmentName"').text(item.channelName + "<br>" + item.channelHistory)
+				});
+			});
+// ---------------------------------------------            
             chatChannel.watch(function (data) {
                  $('#messages-list').append($('<li>').text(data));
                  // update the channel panel 
