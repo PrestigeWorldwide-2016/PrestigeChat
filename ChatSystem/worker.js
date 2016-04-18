@@ -75,6 +75,26 @@ module.exports.run = function (worker) {
     });
 
 
+//Admin Login Check
+        socket.on('loginAdmin', function (user, respond) {
+      console.log(user.uName + " Connected");
+      mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
+          var accountsCollection = db.collection('adminAccounts');
+          accountsCollection.find(user).count(function (err, count) {
+            console.log(count);
+            if (count == 0) {
+              respond('Login failed');
+            }
+            else {
+              respond();
+              console.log('Info is valid.');
+            }
+
+          });
+      });
+    });
+
+
     socket.on('disconnect', function () {
     console.log('User disconnected');
     });
@@ -107,8 +127,5 @@ module.exports.run = function (worker) {
           });
       });
     });
-
-
-
   });
 };
