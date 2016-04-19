@@ -3,8 +3,6 @@
 $(document).ready(function() {
 
     $(document).on("click", ".registration__submit", function(e) {
-    var that = this;
-
 
     var socket = socketCluster.connect();
     var fisrtName = $('#FirstName').val();
