@@ -3,11 +3,11 @@ $(document).ready(function() {
 var   submitPhase1 = 1100,
       submitPhase2 = 400,
       logoutPhase1 = 800,
-      $login = $(".loginAdmin-card"),
+      $login = $(".adminLogin-card"),
       $app = $(".app");
       $app.hide();
 
-    $(document).on("click", ".loginAdmin__submit", function(e) {
+    $(document).on("click", ".adminLogin__submit", function(e) {
     var that = this;
 
 
@@ -19,7 +19,7 @@ var   submitPhase1 = 1100,
       password: userpass
     };
 
-    socket.emit('loginAdmin', user, function (err) {
+    socket.emit('adminLogin', user, function (err) {
 
       if (err) {
         console.log(err);
@@ -50,7 +50,7 @@ function ConnectAdmin() {
           });
 
         socket.on('connect', function () {
-          console.log(username + ' Connected to server');
+          console.log(username + ' Admin Connected to server');
           });
 
           /*
