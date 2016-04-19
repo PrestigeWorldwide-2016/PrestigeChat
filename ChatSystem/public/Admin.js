@@ -3,11 +3,13 @@ $(document).ready(function() {
 var   submitPhase1 = 1100,
       submitPhase2 = 400,
       logoutPhase1 = 800,
-      $adminlogin = $(".adminLogin-card"),
+      $login = $(".adminLogin-card"),
       $app = $(".app");
       $app.hide();
 
     $(document).on("click", ".adminLogin__submit", function(e) {
+    var that = this;
+
 
     var socket = socketCluster.connect();
     var username = $('#Username').val();
