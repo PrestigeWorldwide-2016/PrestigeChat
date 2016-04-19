@@ -1,9 +1,9 @@
 $(document).ready(function() {
     var submitPhase1 = 1100,
-        submitPhase2 = 400,
-        logoutPhase1 = 800,
-        $login = $(".login-card"),
-        $app = $(".app");
+      submitPhase2 = 400,
+      logoutPhase1 = 800,
+      $login = $(".login-card"),
+      $app = $(".app");
 
     $app.hide();
     
@@ -14,8 +14,8 @@ $(document).ready(function() {
         var username = $('#Username').val();
         var userpass = $('#Password').val();
         var user = {
-            uName: username,
-            password: userpass
+          uName: username,
+          password: userpass
         };
 
         socket.emit('login', user, function (err) {
@@ -37,8 +37,6 @@ $(document).ready(function() {
                 }, submitPhase1);
 
                 ConnectUser();
-
-                // populate dom tree here
             }
         });
 
@@ -69,22 +67,26 @@ $(document).ready(function() {
                 return false;
             });
 
-
 			var userCred = { uName: username };
             socket.emit('getChatMessages', userCred);
-// ---------------------------------------------
 			socket.on('chatPanelData', function(data) {
-        $('#channels-list').append('<li class="DepartmentName"><span style="font-weight: bold">'
-        + data.channelName + '</span> <br> <span style="color:blue">' + data.chatHistory + '</span> </li>');
+                $('#channels-list').append(
+                  '<li class="DepartmentName"><span style="font-weight: bold">'
+                  + data.channelName 
+                  + '</span> <br> <span style="color:blue">' 
+                  + data.chatHistory 
+                  + '</span> </li>');
 			});
-// ---------------------------------------------
+            
             chatChannel.watch(function (data) {
                  $('#messages-list').append($('<li>').text(data));
                  // update the channel panel
                  var channelName = '#channels-list#' + data.UserChannel;
                  $(channelName).text(data);
                  // update the channel panel
-                 $('div#messages-div').scrollTop($('div#messages-div')[0].scrollHeight)
+                 $('div#messages-div').scrollTop(
+                     $('div#messages-div')[0].scrollHeight
+                 );
             });
         }
     });
