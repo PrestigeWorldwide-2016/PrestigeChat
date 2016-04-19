@@ -50,84 +50,6 @@ module.exports.run = function (worker) {
     var count = 0;
     /*
     In here we handle our incoming realtime connections and listen for events.
-<<<<<<< HEAD
-  */
-  scServer.on('connection', function (socket) {
-
-
-    socket.on('login', function (user, respond) {
-      console.log(user.uName + " Connected");
-      mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
-          var accountsCollection = db.collection('Accounts');
-          accountsCollection.find(user).count(function (err, count) {
-            console.log(count);
-            if (count == 0) {
-              respond('Login failed');
-            }
-            else {
-              respond();
-              console.log('Info is valid.');
-            }
-
-          });
-      });
-    });
-
-
-//Admin Login Check
-        socket.on('adminLogin', function (user, respond) {
-      console.log(user.uName + " Connected");
-      mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
-          var accountsCollection = db.collection('adminAccounts');
-          accountsCollection.find(user).count(function (err, count) {
-            console.log(count);
-            if (count == 0) {
-              respond('Login failed');
-            }
-            else {
-              respond();
-              console.log('Info is valid.');
-            }
-
-          });
-      });
-    });
-
-
-    socket.on('disconnect', function () {
-    console.log('User disconnected');
-    });
-
-
-    socket.on('chat', function (data) {
-      scServer.global.publish(data.UserChannel, data.UserMessage);
-      var thisChannel = data.UserChannel;
-      var thisMessage = data.UserMessage;
-      console.log(thisMessage + ' ----- was posted inside the channel: ' + thisChannel);
-    });
-
-
-    socket.on('register', function (user, respond) {
-      console.log(user.uName + " Registering...");
-      mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
-          var accountsCollection = db.collection('Accounts');
-          accountsCollection.find( { $or: [ { "uName": user.uName }, {"email": user.email } ] } )
-          .count(function (err, count) {
-            console.log(count);
-            if (count == 0) {
-              accountsCollection.insertOne(user);
-              respond();
-            }
-            else {
-              respond("User Already Exists!");
-              console.log('User Already Exists!');
-            }
-
-          });
-      });
-    });
-  });
-=======
     */
     scServer.on('connection', function (socket) {
         socket.on('login', function (user, respond) {
@@ -190,5 +112,4 @@ module.exports.run = function (worker) {
 			});
 		});
 	});
->>>>>>> refs/remotes/origin/jc-dev
 };
