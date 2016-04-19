@@ -4,12 +4,12 @@ $(document).ready(function() {
         logoutPhase1 = 800,
         $login = $(".login-card"),
         $app = $(".app");
-    
+
     $app.hide();
     
 	$(document).on("click", ".login__submit", function(e) {
         var that = this; // what's this?
-        
+
         var socket = socketCluster.connect();
         var username = $('#Username').val();
         var userpass = $('#Password').val();
@@ -37,7 +37,7 @@ $(document).ready(function() {
                 }, submitPhase1);
 
                 ConnectUser();
-                
+
                 // populate dom tree here
             }
         });
@@ -61,7 +61,7 @@ $(document).ready(function() {
             $('#MessageForm').unbind('submit').bind('submit',function() {
                 if($('#message').val() != '') {
                     socket.emit('chat', {
-                        UserMessage: username + ":  " + $('#message').val(), 
+                        UserMessage: username + ":  " + $('#message').val(),
                         UserChannel: channelName
                     });
                 }
@@ -69,24 +69,21 @@ $(document).ready(function() {
                 return false;
             });
 
-			
+
 			var userCred = { uName: username };
             socket.emit('getChatMessages', userCred);
-// ---------------------------------------------	
+// ---------------------------------------------
 			socket.on('chatPanelData', function(data) {
-				var arrayOfChatPanels = data;
-				arrayOfChatPanels.forEach(function(item) {
-					
-					$('#channels-list').append('<li> class="DepartmentName"').text(item.channelName + "<br>" + item.channelHistory)
-				});
+        $('#channels-list').append('<li class="DepartmentName"><span style="font-weight: bold">'
+        + data.channelName + '</span> <br> <span style="color:blue">' + data.chatHistory + '</span> </li>');
 			});
-// ---------------------------------------------            
+// ---------------------------------------------
             chatChannel.watch(function (data) {
                  $('#messages-list').append($('<li>').text(data));
-                 // update the channel panel 
+                 // update the channel panel
                  var channelName = '#channels-list#' + data.UserChannel;
                  $(channelName).text(data);
-                 // update the channel panel 
+                 // update the channel panel
                  $('div#messages-div').scrollTop($('div#messages-div')[0].scrollHeight)
             });
         }

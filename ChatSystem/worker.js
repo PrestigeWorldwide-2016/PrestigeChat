@@ -42,7 +42,7 @@ module.exports.run = function (worker) {
 
         socket.on('chat', function (data) {
             scServer.global.publish(data.UserChannel, data.UserMessage);
-			// mongo connect and find the collection 
+			// mongo connect and find the collection
             var thisChannel = data.UserChannel;
             var thisMessage = data.UserMessage;
             console.log(thisMessage + ' ----- was posted inside the channel: ' + thisChannel);
@@ -53,9 +53,9 @@ module.exports.run = function (worker) {
             mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers',
                 function (err, db) {
                     var accountsCollection = db.collection('Accounts');
-                        accountsCollection.find({ 
-                            $or: [{ "uName": user.uName }, 
-                                  { "email": user.email }] 
+                        accountsCollection.find({
+                            $or: [{ "uName": user.uName },
+                                  { "email": user.email }]
                         }).count(function (err, count) {
                             console.log(count);
                             if (count == 0) {
@@ -75,12 +75,7 @@ module.exports.run = function (worker) {
                 var chatCollection = db.collection('chatList');
 				var stream = chatCollection.find(userCredentials).stream();
 				stream.on('data', function(listOfFind) {
-					// wrap listOfFind in an array
-					var arrayOfCollections = [];
-					while(chatCollection.hasNext()) {
-					   arrayOfCollections.push(chatCollection.next());
-					}
-					socket.emit('chatPanelData', arrayOfCollections);
+					socket.emit('chatPanelData', listOfFind);
 				});
 			});
 		});
