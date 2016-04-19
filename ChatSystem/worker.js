@@ -76,7 +76,7 @@ module.exports.run = function (worker) {
 
 
 //Admin Login Check
-        socket.on('loginAdmin', function (user, respond) {
+        socket.on('adminLogin', function (user, respond) {
       console.log(user.uName + " Connected");
       mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
           var accountsCollection = db.collection('adminAccounts');
