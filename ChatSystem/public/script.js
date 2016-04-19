@@ -9,6 +9,8 @@ var   submitPhase1 = 1100,
       $app.hide();
 
     $(document).on("click", ".login__submit", function(e) {
+    var that = this;
+
 
     var socket = socketCluster.connect();
     var username = $('#Username').val();
