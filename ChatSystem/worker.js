@@ -49,10 +49,15 @@ module.exports.run = function (worker) {
 
     var count = 0;
     /*
+<<<<<<< HEAD
     In here we handle our incoming realtime connections and listen for events.
 <<<<<<< HEAD
   */
 
+=======
+    In here we handle our incoming realtime connections and listen for events
+    */
+>>>>>>> origin/master
     scServer.on('connection', function (socket) {
         socket.on('login', function (user, respond) {
             console.log(user.uName + " Connected");
