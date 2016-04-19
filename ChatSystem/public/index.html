@@ -14,6 +14,7 @@
   <body>
 
     <div class="login-card">
+<<<<<<< HEAD
     <h1>Log-in</h1><br>
   <div class="Login_Form">
     <input type="text" name="user" id="Username" placeholder="Username">
@@ -54,12 +55,52 @@
  </div>
  </div>
 
+=======
+      <h1>Log-in</h1><br>
+        <div class="Login_Form">
+          <input type="text" name="user" id="Username" placeholder="Username">
+          <input type="password" name="pass" id="Password" placeholder="Password">
+          <button type="button" class="login__submit">Sign in</button>
+        </div>
+
+        <div class="login-help">
+          <a href="/Registration.html">Register</a> • <a href="#">Forgot Password</a>
+        </div>
+    </div>
+
+    <!-- Messaging Window -->
+    <div class="app">
+      <div class="ChannelContainer">
+        <div class="ChannelName">
+          <ul id="channels-list"></ul>
+        </div>
+      <div class="ListActions">
+        <form>
+          <input id="ChannelSearch" autocomplete="off" placeholder="Search">
+          <button>Search</button>
+        </form>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="messages" id="messages-div">
+          <ul id="messages-list"></ul>
+        </div>
+        <div class="actions">
+          <form id="MessageForm">
+            <input id="message" autocomplete="off" placeholder="Type a message...">
+            <button class="message-button">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+>>>>>>> refs/remotes/origin/jc-dev
 
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
-
-<script type="text/javascript" src="/socketcluster.js"></script>
-<script type="text/javascript" src="/script.js"></script>
+    <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
+    
+    <script type="text/javascript" src="/socketcluster.js"></script>
+    <script type="text/javascript" src="/script.js"></script>
 
   </body>
 </html>
