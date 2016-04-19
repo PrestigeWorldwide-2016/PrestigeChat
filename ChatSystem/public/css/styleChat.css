@@ -9,6 +9,11 @@ body {
   font-family: 'Roboto';
   background-color: #F9F9F9;
 }
+
+body > * {
+	border-radius: 2px;
+}
+
 a {
   font-weight: 300;
   color: #72B963;
