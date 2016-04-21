@@ -40,9 +40,9 @@ $(document).ready(function() {
         location.reload();
       }
 
-      else if ((fisrtName == null) || (lastName == null) 
-         || (email == null) || (username == null) 
-         || (userpass == null)) {
+      else if ((user.fName == null) || (user.lName == null) 
+         || (user.email == null) || (user.uName == null) 
+         || (user.password == null)) {
         console.log("User did not enter Valid Credetials.");
         window.prompt("Please enter Valid Credetials.");
         location.reload();
