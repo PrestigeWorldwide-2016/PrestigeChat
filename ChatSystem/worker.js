@@ -70,6 +70,8 @@ module.exports.run = function (worker) {
             });
         });
 
+//Start of Admin Section
+
         //Admin Login Check
         socket.on('loginAdmin', function (user, respond) {
               console.log(user.uName + " Connected");
@@ -87,6 +89,21 @@ module.exports.run = function (worker) {
                   });
               });
             });
+
+      //Admin Throwing Back all the users to client
+      socket.on('GetUserInfo', function () {
+      /* For inside of here, connect to the mongodb, specify the collection
+      you want to get data from, then set a variable to stream the results of a find()
+      to get all of the users. While that stream is on (don't use an actual while loop)
+      do a socket.emit of the userObject it is streaming. IMPORTANT 'data' is a
+      reserved word for stream.on, you can pass out any placeholder name in the
+      socket.emit though within the stream.on, just has to match the function
+      name above it.
+       */
+      });
+
+
+//End of Admin Section
 
         socket.on('disconnect', function () {
             console.log('User disconnected');

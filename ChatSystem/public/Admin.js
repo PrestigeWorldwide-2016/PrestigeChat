@@ -51,6 +51,24 @@ function ConnectAdmin() {
           console.log(username + ' Admin Connected to server');
           });
 
+          //Tells server that client is ready to get users
+          socket.emit('GetUserInfo');
+
+
+          /* Waits for server to emit 'ServerUserInfo', data is a
+          reserved variable name for each User object that is streamed to
+          the client it is reserved at the server during stream.on */
+          socket.on('ServerUserInfo', function (data) {
+            /* Included in here is javascript HTML that will be sent to the
+            webpage, it will be a mix of HTML in quotes and javascript object
+            references for the content of what's inside the elemnents (div's,
+             li's, etc.)  Don't forget you will have to use forEach functions
+             for parts of the user object that contain arrays */
+
+          });
+          
+
+          //Code from scriptJS left in here to view as an example
           /*
           var channelName = "BigGroup";
           var chatChannel = socket.subscribe(channelName);
