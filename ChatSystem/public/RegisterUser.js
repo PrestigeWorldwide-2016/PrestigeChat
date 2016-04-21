@@ -19,9 +19,9 @@ $(document).ready(function() {
       password: userpass
     };
 
-    if ((fisrtName == NULL) || (lastName == NULL) 
-         || (email == NULL) || (username == NULL) 
-         || (userpass == NULL)) {
+    if ((fisrtName == null) || (lastName == null) 
+         || (email == null) || (username == null) 
+         || (userpass == null)) {
       console.log("User did not enter Valid Credetials.");
       window.prompt("Please enter Valid Credetials.");
       location.reload();
