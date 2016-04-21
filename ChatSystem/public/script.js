@@ -71,8 +71,8 @@ $(document).ready(function() {
             socket.emit('getChatMessages', userCred);
 			socket.on('chatPanelData', function(data) {
                 $('#channels-list').append(
-                  + data.channelName 
                   '<li class="DepartmentName id=' + data.channelName + '><span style="font-weight: bold">'
+                  + data.displayName 
                   + '</span> <br> <span style="color:blue">' 
                   + data.chatHistory 
                   + '</span> </li>');
