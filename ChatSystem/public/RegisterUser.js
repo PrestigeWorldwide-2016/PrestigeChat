@@ -19,15 +19,18 @@ $(document).ready(function() {
       password: userpass
     };
 
+
+    /*
     if ((fisrtName == null) || (lastName == null) 
          || (email == null) || (username == null) 
          || (userpass == null)) {
       console.log("User did not enter Valid Credetials.");
       window.prompt("Please enter Valid Credetials.");
       location.reload();
-    }
 
-    else {
+    }
+    */
+
 
     socket.emit('register', user, function (err) {
 
@@ -36,11 +39,19 @@ $(document).ready(function() {
         window.prompt("We're Sorry! That Username or Email is already registered.");
         location.reload();
       }
+
+      else if ((fisrtName == null) || (lastName == null) 
+         || (email == null) || (username == null) 
+         || (userpass == null)) {
+        console.log("User did not enter Valid Credetials.");
+        window.prompt("Please enter Valid Credetials.");
+        location.reload();
+      }
+
       else {
         window.prompt("Successfully Registered You!!!");
         location.href = "/";
       }
     });
-   }
   });
 });
