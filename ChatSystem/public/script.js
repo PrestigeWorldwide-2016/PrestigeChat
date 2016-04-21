@@ -99,6 +99,7 @@ $(document).ready(function() {
           departmentName: openDepartmentNamed
         }
         
+        socket.emit('getChatMessages', objForServer);
         // and then get data like how u got it from the channel
     }
 });
