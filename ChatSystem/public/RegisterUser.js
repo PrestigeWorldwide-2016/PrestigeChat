@@ -3,10 +3,6 @@
 $(document).ready(function() {
 
     $(document).on("click", ".registration__submit", function(e) {
-<<<<<<< HEAD
-=======
-    var that = this;
->>>>>>> refs/remotes/origin/jc-dev
 
     var socket = socketCluster.connect();
     var fisrtName = $('#FirstName').val();
