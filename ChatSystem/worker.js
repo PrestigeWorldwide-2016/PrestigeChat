@@ -83,6 +83,7 @@ module.exports.run = function (worker) {
         socket.on('populateChatWindow', function(clientObject){
             // open a connection to the database
 			mongo.connect('mongodb://prestigedbuser:dbpassword@ds021010.mlab.com:21010/prestigechat', function (err, db) {
+                var chatCollection = db.collection(clientObject.departmentName);
 				var stream = chatCollection.find(userCredentials).stream();
 				stream.on('data', function(listOfFind) {
 					socket.emit('chatPanelData', listOfFind);
