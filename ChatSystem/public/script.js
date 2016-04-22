@@ -93,11 +93,6 @@ $(document).ready(function() {
     
     $(document).on("click", ".DepartmentName", function(e) {
         var openDepartmentNamed = e.target.id()
-        // socket emit
-        var objForServer = {
-          uName: username,
-          departmentName: openDepartmentNamed
-        }
         
         socket.emit('getChatMessages', objForServer);
         
