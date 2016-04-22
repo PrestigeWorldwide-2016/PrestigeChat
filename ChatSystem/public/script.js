@@ -98,11 +98,6 @@ $(document).ready(function() {
         
         socket.on('populateChatWindow', function(data) {
                 $('#channels-list').append(
-                  '<li class="DepartmentName id=' + data.channelName + '><span style="font-weight: bold">'
-                  + data.displayName 
-                  + '</span> <br> <span style="color:blue">' 
-                  + data.chatHistory 
-                  + '</span> </li>');)
         // and then get data like how u got it from the channel
     }
 });
