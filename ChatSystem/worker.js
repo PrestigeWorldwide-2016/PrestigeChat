@@ -79,6 +79,8 @@ module.exports.run = function (worker) {
 				});
 			});
 		});
+
+        socket.on('populateChatWindow', function(departmentName){
             // open a connection to the database
 			mongo.connect('mongodb://prestigedbuser:dbpassword@ds021010.mlab.com:21010/prestigechat', function (err, db) {
 				});
