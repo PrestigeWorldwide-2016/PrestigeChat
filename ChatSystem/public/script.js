@@ -85,19 +85,13 @@ $(document).ready(function() {
                  $(channelName).text(data);
                  // update the channel panel
                  $('div#messages-div').scrollTop(
-                     $('div#messages-div')[0].scrollHeight
+                     $('div#messages-div')[0].scrollHeight;
                  );
             });
         }
     });
-    
+
     $(document).on("click", ".DepartmentName", function(e) {
-        var openDepartmentNamed = e.target.id()
-        
-        socket.emit('getChatMessages', objForServer);
-        
-        socket.on('populateChatWindow', function(data) {
-                $('#channels-list').append(
         // and then get data like how u got it from the channel
     }
 });
