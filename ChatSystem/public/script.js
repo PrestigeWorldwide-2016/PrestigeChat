@@ -6,7 +6,7 @@ $(document).ready(function() {
       $app = $(".app");
 
     $app.hide();
-    
+
 	$(document).on("click", ".login__submit", function(e) {
         var that = this; // what's this?
 
@@ -72,14 +72,14 @@ $(document).ready(function() {
 			socket.on('chatPanelData', function(data) {
                 $('#channels-list').append(
                   '<li class="DepartmentName id=' + data.channelName + '><span style="font-weight: bold">'
-                  + data.displayName 
-                  + '</span> <br> <span style="color:blue">' 
-                  + data.chatHistory 
+                  + data.displayName
+                  + '</span> <br> <span style="color:blue">'
+                  + data.chatHistory
                   + '</span> </li>');
 			});
-            
+
             chatChannel.watch(function (data) {
-                 $('#messages-list').append($('<li>').text(data));
+                 $('#messages-list').append('<li>' + data + '</li>');
                  // update the channel panel
                  var channelName = '#channels-list#' + data.UserChannel;
                  $(channelName).text(data);
