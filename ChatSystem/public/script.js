@@ -97,6 +97,14 @@ $(document).ready(function() {
         socket.emit('populateChatWindow', openDepartmentNamed);
 
 
+        socket.on('chatReceivedData', function(data) {
+                $('#messages-list').append(
+                  '<li>' + data + '</li>'
+                );
+                $('div#messages-div').scrollTop(
+                    $('div#messages-div')[0].scrollHeight;
+                );
+              );
         // and then get data like how u got it from the channel
     }
 });
