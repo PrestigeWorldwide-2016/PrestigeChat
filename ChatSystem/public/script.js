@@ -92,6 +92,11 @@ $(document).ready(function() {
     });
 
     $(document).on("click", ".DepartmentName", function(e) {
+        var openDepartmentNamed = e.target.id();
+
+        socket.emit('populateChatWindow', openDepartmentNamed);
+
+
         // and then get data like how u got it from the channel
     }
 });
