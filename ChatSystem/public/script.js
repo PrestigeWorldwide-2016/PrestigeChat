@@ -40,6 +40,7 @@ $(document).ready(function() {
             }
         });
 
+
         function ConnectUser() {
             socket.on('error', function (err) {
                 throw 'Socket error - ' + err;
@@ -76,7 +77,7 @@ $(document).ready(function() {
                   + '</span> <br> <span style="color:blue">'
                   + data.chatHistory
                   + '</span> </li>');
-			});
+			        });
 
             chatChannel.watch(function (data) {
                  $('#messages-list').append('<li>' + data + '</li>');
@@ -85,11 +86,8 @@ $(document).ready(function() {
                  $(channelName).text(data);
                  // update the channel panel
                  $('div#messages-div').scrollTop(
-                     $('div#messages-div')[0].scrollHeight;
-                 );
+                     $('div#messages-div')[0].scrollHeight);
             });
-        }
-    });
 
     $(document).on("click", ".DepartmentName", function(e) {
         var openDepartmentNamed = e.target.id();
@@ -102,9 +100,9 @@ $(document).ready(function() {
                   '<li>' + data + '</li>'
                 );
                 $('div#messages-div').scrollTop(
-                    $('div#messages-div')[0].scrollHeight;
-                );
-              );
-        // and then get data like how u got it from the channel
+                    $('div#messages-div')[0].scrollHeight);
+              });
+            });
     }
+  });
 });
