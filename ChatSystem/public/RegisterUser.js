@@ -4,9 +4,9 @@ $(document).ready(function() {
 
     $(document).on("click", ".registration__submit", function(e) {
 
-     if ( ($('#FirstName').val() == null) || ($('#LastName').val() == null)
-          || ($('#Email').val() == null) || ($('#Username').val() == null)
-          || ($('#Password').val() == null) ) {
+     if ( ($('#FirstName').val() == "") || ($('#LastName').val() == "")
+          || ($('#Email').val() == "") || ($('#Username').val() == "")
+          || ($('#Password').val() == "") ) {
         console.log("user info not valid")
         window.prompt("Please enter Valid info")
         location.reload();
