@@ -122,6 +122,7 @@ module.exports.run = function (worker) {
                         }
             //
                         mongo.connect('mongodb://prestigedbuser:dbpassword@ds021010.mlab.com:21010/prestigechat', function (err, db) {
+                                  var chatCollection = db.collection(thisChannel);
                                 })
         });
 
