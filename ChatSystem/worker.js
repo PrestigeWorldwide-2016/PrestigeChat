@@ -115,6 +115,10 @@ module.exports.run = function (worker) {
             var thisChannel = data.UserChannel;
             var thisMessage = data.UserMessage;
             console.log(thisMessage + ' ----- was posted inside the channel: ' + thisChannel);
+            //new obj that holds the most recent message
+                        var rcvdMsg = {
+                          "content" = thisMessage;
+                        }
         });
 
         socket.on('register', function (user, respond) {
