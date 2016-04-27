@@ -111,7 +111,7 @@ module.exports.run = function (worker) {
 
         socket.on('chat', function (data) {
             scServer.global.publish(data.UserChannel, data.UserMessage);
-			// mongo connect and find the collection
+      			// mongo connect and find the collection
             var thisChannel = data.UserChannel;
             var thisMessage = data.UserMessage;
             console.log(thisMessage + ' ----- was posted inside the channel: ' + thisChannel);
