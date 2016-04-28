@@ -4,6 +4,15 @@ $(document).ready(function() {
 
     $(document).on("click", ".registration__submit", function(e) {
 
+     if ( ($('#FirstName').val() == "") || ($('#LastName').val() == "")
+          || ($('#Email').val() == "") || ($('#Username').val() == "")
+          || ($('#Password').val() == "") ) {
+        console.log("user info not valid")
+        window.prompt("Please enter Valid info")
+        location.reload();
+     } 
+
+     else {
     var socket = socketCluster.connect();
     var fisrtName = $('#FirstName').val();
     var lastName = $('#LastName').val();
@@ -19,15 +28,8 @@ $(document).ready(function() {
       password: userpass
     };
 
-    if ((fisrtName == NULL) || (lastName == NULL) 
-         || (email == NULL) || (username == NULL) 
-         || (userpass == NULL)) {
-      console.log("User did not enter Valid Credetials.");
-      window.prompt("Please enter Valid Credetials.");
-      location.reload();
     }
 
-    else {
 
     socket.emit('register', user, function (err) {
 
@@ -41,6 +43,5 @@ $(document).ready(function() {
         location.href = "/";
       }
     });
-   }
   });
 });
