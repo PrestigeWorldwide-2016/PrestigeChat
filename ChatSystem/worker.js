@@ -118,7 +118,7 @@ module.exports.run = function (worker) {
 
             //new obj that holds the most recent message
                         var rcvdMsg = {
-                          "content" = thisMessage;
+                          "content" : thisMessage
                         }
             //
                         mongo.connect('mongodb://prestigedbuser:dbpassword@ds021010.mlab.com:21010/prestigechat', function (err, db) {
