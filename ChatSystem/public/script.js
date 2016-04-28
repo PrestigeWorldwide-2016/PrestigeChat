@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     var submitPhase1 = 1100,
       submitPhase2 = 400,
       logoutPhase1 = 800,
@@ -6,7 +7,7 @@ $(document).ready(function() {
       $app = $(".app");
 
     $app.hide();
-    
+
 	$(document).on("click", ".login__submit", function(e) {
         var that = this; // what's this?
 
@@ -40,20 +41,23 @@ $(document).ready(function() {
             }
         });
 
+
         function ConnectUser() {
             socket.on('error', function (err) {
                 throw 'Socket error - ' + err;
             });
 
-            socket.on('connect', function () {
-                console.log(username + ' Connected to server');
-            });
+        socket.on('connect', function () {
+          console.log(username + ' Connected to server');
+          });
 
-            var channelName = "BigGroup";
-            var chatChannel = socket.subscribe(channelName);
-            chatChannel.on('subscribeFail', function(err) {
-                console.log('Failed to subscribe to ' + channelName + ' channel due to error: ' + err);
-            });
+
+          var channelName = "BigGroup";
+          var chatChannel = socket.subscribe(channelName);
+          chatChannel.on('subscribeFail', function(err) {
+          console.log('Failed to subscribe to ' + channelName + ' channel due to error: ' + err);
+          });
+
             console.log("This is the connected channelName: " + channelName);
 
             $('#MessageForm').unbind('submit').bind('submit',function() {
@@ -72,42 +76,36 @@ $(document).ready(function() {
 			socket.on('chatPanelData', function(data) {
                 $('#channels-list').append(
                   '<li class="DepartmentName id=' + data.channelName + '><span style="font-weight: bold">'
-                  + data.displayName 
-                  + '</span> <br> <span style="color:blue">' 
-                  + data.chatHistory 
+                  + data.displayName
+                  + '</span> <br> <span style="color:blue">'
+                  + data.chatHistory
                   + '</span> </li>');
-			});
-            
+			        });
+
             chatChannel.watch(function (data) {
-                 $('#messages-list').append($('<li>').text(data));
+                 $('#messages-list').append('<li>' + data + '</li>');
                  // update the channel panel
                  var channelName = '#channels-list#' + data.UserChannel;
                  $(channelName).text(data);
                  // update the channel panel
                  $('div#messages-div').scrollTop(
-                     $('div#messages-div')[0].scrollHeight
-                 );
+                     $('div#messages-div')[0].scrollHeight);
             });
-        }
-    });
-    
+
     $(document).on("click", ".DepartmentName", function(e) {
-        var openDepartmentNamed = e.target.id()
-        // socket emit
-        var objForServer = {
-          uName: username,
-          departmentName: openDepartmentNamed
-        }
-        
-        socket.emit('getChatMessages', objForServer);
-        
-        socket.on('populateChatWindow', function(data) {
-                $('#channels-list').append(
-                  '<li class="DepartmentName id=' + data.channelName + '><span style="font-weight: bold">'
-                  + data.displayName 
-                  + '</span> <br> <span style="color:blue">' 
-                  + data.chatHistory 
-                  + '</span> </li>');)
-        // and then get data like how u got it from the channel
+        var openDepartmentNamed = e.target.id();
+
+        socket.emit('populateChatWindow', openDepartmentNamed);
+
+
+        socket.on('chatReceivedData', function(data) {
+                $('#messages-list').append(
+                  '<li>' + data + '</li>'
+                );
+                $('div#messages-div').scrollTop(
+                    $('div#messages-div')[0].scrollHeight);
+              });
+            });
     }
+  });
 });

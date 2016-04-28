@@ -3,7 +3,6 @@
 $(document).ready(function() {
 
     $(document).on("click", ".registration__submit", function(e) {
-    var that = this;
 
     var socket = socketCluster.connect();
     var fisrtName = $('#FirstName').val();
@@ -20,11 +19,21 @@ $(document).ready(function() {
       password: userpass
     };
 
+    if ((fisrtName == NULL) || (lastName == NULL) 
+         || (email == NULL) || (username == NULL) 
+         || (userpass == NULL)) {
+      console.log("User did not enter Valid Credetials.");
+      window.prompt("Please enter Valid Credetials.");
+      location.reload();
+    }
+
+    else {
+
     socket.emit('register', user, function (err) {
 
       if (err) {
         console.log(err);
-        window.prompt("We're Sorry! That Username or Email is already registered.")
+        window.prompt("We're Sorry! That Username or Email is already registered.");
         location.reload();
       }
       else {
@@ -32,5 +41,6 @@ $(document).ready(function() {
         location.href = "/";
       }
     });
+   }
   });
 });
