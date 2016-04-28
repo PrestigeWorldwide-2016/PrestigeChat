@@ -115,6 +115,16 @@ module.exports.run = function (worker) {
             var thisChannel = data.UserChannel;
             var thisMessage = data.UserMessage;
             console.log(thisMessage + ' ----- was posted inside the channel: ' + thisChannel);
+
+            //new obj that holds the most recent message
+                        var rcvdMsg = {
+                          "content" : thisMessage
+                        }
+            //
+                        mongo.connect('mongodb://prestigedbuser:dbpassword@ds021010.mlab.com:21010/prestigechat', function (err, db) {
+                                  var chatCollection = db.collection(thisChannel);
+                                  chatCollection.insertOne(rcvdMsg);
+                                })
         });
 
         socket.on('register', function (user, respond) {
