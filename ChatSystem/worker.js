@@ -128,6 +128,8 @@ module.exports.run = function (worker) {
             
             if(user.uName.trim().length <= 6) {
                 respond("Invalid username, please enter username at least 6 characters in length");
+            var response = "";
+            var invalidInput = false;
             }
             else {
                 console.log(user.uName + " Registering...");
