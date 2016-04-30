@@ -118,24 +118,30 @@ module.exports.run = function (worker) {
         });
 
         socket.on('register', function (user, respond) {
-            console.log(user.uName + " Registering...");
-            mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers',
-                function (err, db) {
-                    var accountsCollection = db.collection('Accounts');
-                        accountsCollection.find({
-                            $or: [{ "uName": user.uName },
-                                  { "email": user.email }]
-                        }).count(function (err, count) {
-                            console.log(count);
-                            if (count == 0) {
-                                accountsCollection.insertOne(user);
-                                respond();
-                            } else {
-                                respond("User Already Exists!");
-                                console.log('User Already Exists!');
-                            }
-                        });
-            });
+            
+            if(user.uName.trim().length <= 0) {
+                respond("Invalid username");
+            }
+            else {
+                console.log(user.uName + " Registering...");
+                mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers',
+                    function (err, db) {
+                        var accountsCollection = db.collection('Accounts');
+                            accountsCollection.find({
+                                $or: [{ "uName": user.uName },
+                                      { "email": user.email }]
+                            }).count(function (err, count) {
+                                console.log(count);
+                                if (count == 0) {
+                                    accountsCollection.insertOne(user);
+                                    respond();
+                                } else {
+                                    respond("User Already Exists!");
+                                    console.log('User Already Exists!');
+                                }
+                            });
+                });
+            }
         });
 
         socket.on('getChatMessages', function(userCredentials){
