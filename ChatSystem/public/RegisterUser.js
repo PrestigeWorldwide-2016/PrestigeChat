@@ -33,7 +33,7 @@ $(document).ready(function() {
 
       if (err) {
         console.log(err);
-        window.prompt("We're Sorry! That Username or Email is already registered.");
+        window.alert(err);
         location.reload();
       }
       else {
