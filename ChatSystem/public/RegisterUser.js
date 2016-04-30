@@ -37,7 +37,7 @@ $(document).ready(function() {
         location.reload();
       }
       else {
-        window.prompt("Successfully Registered You!!!");
+        window.prompt("Successfully Registered " + username + ".");
         location.href = "/";
       }
     });
