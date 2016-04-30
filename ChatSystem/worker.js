@@ -41,8 +41,6 @@ function validateEmail(email) {
     return re.test(email);
 }
 
-
-
 module.exports.run = function (worker) {
     console.log('   >> Worker PID:', process.pid);
     var app = require('express')();
@@ -125,7 +123,6 @@ module.exports.run = function (worker) {
         });
 
         socket.on('register', function (user, respond) {
-            
             var response = "";
             var invalidInput = false;
             
