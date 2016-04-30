@@ -126,12 +126,33 @@ module.exports.run = function (worker) {
 
         socket.on('register', function (user, respond) {
             
-            if(user.uName.trim().length <= 6) {
-                respond("Invalid username, please enter username at least 6 characters in length");
             var response = "";
             var invalidInput = false;
+            
+            if(user.fName.trim().length < 1) {
+                response += "Invalid username, please enter username at least 6 characters in length";
+                invalidInput = true;
             }
-            else {
+            if(user.lName.trim().length < 1) {
+                response += "\nInvalid last name.";
+                invalidInput = true;
+            }
+            if(!validateEmail(user.email)) {
+                response += "\nInvalid email address.";
+                invalidInput = true;
+            }
+            if(user.uName.trim().length < 6) {
+                response += "\nInvalid username, please enter username at least 6 characters in length";
+                invalidInput = true;
+            }
+            if(user.password.length < 8) {
+                response += "\nPassword must be longer than 8 characters.";
+                invalidInput = true;
+            }
+            
+            if(invalidInput == true) {
+                respond(response);
+            } else {
                 console.log(user.uName + " Registering...");
                 mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers',
                     function (err, db) {
