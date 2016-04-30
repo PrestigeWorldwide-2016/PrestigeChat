@@ -119,8 +119,8 @@ module.exports.run = function (worker) {
 
         socket.on('register', function (user, respond) {
             
-            if(user.uName.trim().length <= 0) {
                 respond("Invalid username");
+            if(user.uName.trim().length <= 6) {
             }
             else {
                 console.log(user.uName + " Registering...");
