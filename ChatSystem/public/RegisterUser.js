@@ -12,14 +12,14 @@ $(document).ready(function() {
         location.reload();
      } else {
         var socket = socketCluster.connect();
-        var fisrtName = $('#FirstName').val();
+        var firstName = $('#FirstName').val();
         var lastName = $('#LastName').val();
         var email = $('#Email').val();
         var username = $('#Username').val();
         var userpass = $('#Password').val();
 
         var user = {
-          fName: fisrtName,
+          fName: firstName,
           lName: lastName,
           email: email,
           uName: username,
