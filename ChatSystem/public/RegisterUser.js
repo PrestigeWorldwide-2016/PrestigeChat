@@ -10,47 +10,31 @@ $(document).ready(function() {
         console.log("user info not valid")
         window.prompt("Please enter Valid info")
         location.reload();
-     } 
+     } else {
+        var socket = socketCluster.connect();
+        var fisrtName = $('#FirstName').val();
+        var lastName = $('#LastName').val();
+        var email = $('#Email').val();
+        var username = $('#Username').val();
+        var userpass = $('#Password').val();
 
-     else {
-    var socket = socketCluster.connect();
-    var fisrtName = $('#FirstName').val();
-    var lastName = $('#LastName').val();
-    var email = $('#Email').val();
-    var username = $('#Username').val();
-    var userpass = $('#Password').val();
-
-    var user = {
-      fName: fisrtName,
-      lName: lastName,
-      email: email,
-      uName: username,
-      password: userpass
-    };
-
-<<<<<<< HEAD
-=======
-    if ((fisrtName == null || fisrtName === false) || (lastName == null || lastName === false) 
-         || (email == null || email === false) || (username == null || username === false) 
-         || (userpass == null || userpass === false)) {
-      console.log("User did not enter Valid Credetials.");
-      window.prompt("Please enter Valid Credetials.");
-      location.reload();
->>>>>>> jc-dev
-    }
-
-
-    socket.emit('register', user, function (err) {
-
-      if (err) {
-        console.log(err);
-        window.alert(err);
-        location.reload();
-      }
-      else {
-        window.prompt("Successfully Registered " + username + ".");
-        location.href = "/";
-      }
+        var user = {
+          fName: fisrtName,
+          lName: lastName,
+          email: email,
+          uName: username,
+          password: userpass
+        };
+     }
+        socket.emit('register', user, function (err) {
+            if (err) {
+                console.log(err);
+                window.alert(err);
+                location.reload();
+            } else {
+                window.prompt("Successfully Registered " + username + ".");
+                location.href = "/";
+            }
+        });
     });
-  });
 });
