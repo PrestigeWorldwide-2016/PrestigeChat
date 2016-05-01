@@ -7,7 +7,6 @@ $(document).ready(function() {
       $app = $(".app");
 
     $app.hide();
-
     
 	$(document).on("click", ".login__submit", function(e) {
         var that = this; // what's this?
