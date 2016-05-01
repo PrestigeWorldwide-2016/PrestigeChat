@@ -34,7 +34,12 @@ Below is an exact copy of a User Account in the Databse to use as a reference.
 
 
 */
-
+function validateEmail(email) { 
+  // http://stackoverflow.com/a/46181/11236
+  
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
 
 module.exports.run = function (worker) {
     console.log('   >> Worker PID:', process.pid);
@@ -128,24 +133,52 @@ module.exports.run = function (worker) {
         });
 
         socket.on('register', function (user, respond) {
-            console.log(user.uName + " Registering...");
-            mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers',
-                function (err, db) {
-                    var accountsCollection = db.collection('Accounts');
-                        accountsCollection.find({
-                            $or: [{ "uName": user.uName },
-                                  { "email": user.email }]
-                        }).count(function (err, count) {
-                            console.log(count);
-                            if (count == 0) {
-                                accountsCollection.insertOne(user);
-                                respond();
-                            } else {
-                                respond("User Already Exists!");
-                                console.log('User Already Exists!');
-                            }
-                        });
-            });
+            var response = "";
+            var invalidInput = false;
+            
+            if(user.fName.trim().length < 1) {
+                response += "Invalid username, please enter username at least 6 characters in length";
+                invalidInput = true;
+            }
+            if(user.lName.trim().length < 1) {
+                response += "\nInvalid last name.";
+                invalidInput = true;
+            }
+            if(!validateEmail(user.email)) {
+                response += "\nInvalid email address.";
+                invalidInput = true;
+            }
+            if(user.uName.trim().length < 6) {
+                response += "\nInvalid username, please enter username at least 6 characters in length";
+                invalidInput = true;
+            }
+            if(user.password.length < 8) {
+                response += "\nPassword must be longer than 8 characters.";
+                invalidInput = true;
+            }
+            
+            if(invalidInput == true) {
+                respond(response);
+            } else {
+                console.log(user.uName + " Registering...");
+                mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers',
+                    function (err, db) {
+                        var accountsCollection = db.collection('Accounts');
+                            accountsCollection.find({
+                                $or: [{ "uName": user.uName },
+                                      { "email": user.email }]
+                            }).count(function (err, count) {
+                                console.log(count);
+                                if (count == 0) {
+                                    accountsCollection.insertOne(user);
+                                    respond();
+                                } else {
+                                    respond("User Already Exists!");
+                                    console.log('User Already Exists!');
+                                }
+                            });
+                });
+            }
         });
 
         socket.on('getChatMessages', function(userCredentials){

@@ -28,6 +28,15 @@ $(document).ready(function() {
       password: userpass
     };
 
+<<<<<<< HEAD
+=======
+    if ((fisrtName == null || fisrtName === false) || (lastName == null || lastName === false) 
+         || (email == null || email === false) || (username == null || username === false) 
+         || (userpass == null || userpass === false)) {
+      console.log("User did not enter Valid Credetials.");
+      window.prompt("Please enter Valid Credetials.");
+      location.reload();
+>>>>>>> jc-dev
     }
 
 
@@ -35,11 +44,11 @@ $(document).ready(function() {
 
       if (err) {
         console.log(err);
-        window.prompt("We're Sorry! That Username or Email is already registered.");
+        window.alert(err);
         location.reload();
       }
       else {
-        window.prompt("Successfully Registered You!!!");
+        window.prompt("Successfully Registered " + username + ".");
         location.href = "/";
       }
     });
