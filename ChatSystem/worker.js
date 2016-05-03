@@ -3,7 +3,8 @@ var express = require('express');
 var serveStatic = require('serve-static');
 var path = require('path');
 var mongo = require('mongodb').MongoClient;
-
+/////////Rebecca's Edit////////
+var currChatId = "";
 
 /*
 -----------------------------------------------------------------------------
@@ -32,7 +33,7 @@ Below is an exact copy of a User Account in the Databse to use as a reference.
     ]
 }
 */
-function validateEmail(email) { 
+function validateEmail(email) {
     // http://stackoverflow.com/a/46181/11236
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
@@ -130,7 +131,7 @@ module.exports.run = function (worker) {
         socket.on('register', function (user, respond) {
             var response = "";
             var invalidInput = false;
-            
+
             if(user.fName.trim().length < 1) {
                 response += "Invalid username, please enter username at least 6 characters in length";
                 invalidInput = true;
@@ -151,7 +152,7 @@ module.exports.run = function (worker) {
                 response += "\nPassword must be longer than 8 characters.";
                 invalidInput = true;
             }
-            
+
             if(invalidInput == true) {
                 respond(response);
             } else {
