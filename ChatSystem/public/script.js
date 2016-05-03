@@ -7,7 +7,7 @@ $(document).ready(function() {
       $app = $(".app");
 
     $app.hide();
-
+    
 	$(document).on("click", ".login__submit", function(e) {
         var that = this; // what's this?
 
@@ -96,8 +96,7 @@ $(document).ready(function() {
         var openDepartmentNamed = e.target.id();
 
         socket.emit('populateChatWindow', openDepartmentNamed);
-
-
+        
         socket.on('chatReceivedData', function(data) {
                 $('#messages-list').append(
                   '<li>' + data + '</li>'
@@ -106,6 +105,6 @@ $(document).ready(function() {
                     $('div#messages-div')[0].scrollHeight);
               });
             });
-    }
-  });
+        }
+    });
 });
