@@ -48,7 +48,7 @@ a {
 .actions {
   position: absolute;
   bottom: 0;
-  background-color: #2ecc71;
+  background-color: #1f66e5;
   width: 100%;
   border-top: 1px solid #EEEEEE;
 }
@@ -68,7 +68,7 @@ a {
   font-size: 1em;
   padding: 1.5vh 1vw;
   float: left;
-  background-color: #2ecc71;
+  background-color: #1f66e5;
   color: #FFFFFF;
 }
 
@@ -86,9 +86,7 @@ a {
 }
 
 .login__submit:hover {
-  /* border: 1px solid #2f5bb7; */
   border: 0px;
   text-shadow: 0 1px rgba(0,0,0,0.3);
   background-color: #b3c2bf;
-  /* background-image: -webkit-gradient(linear, 0 0, 0 100%,   from(#4d90fe), to(#357ae8)); */
 }

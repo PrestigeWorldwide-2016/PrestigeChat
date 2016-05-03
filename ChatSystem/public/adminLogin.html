@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Admin Log-in</title>
+
+    <link rel='stylesheet prefetch' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
+    <link rel="stylesheet" href="css/adminLogin.css">
+    <link rel="stylesheet" type="text/css" href="css/styleChat.css">
+    <link rel="stylesheet" type="text/css" href="css/ChannelList.css">
+    <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Open+Sans'>
+  </head>
+
+  <body>
+
+<!--  Start of Admin Login View -->
+
+    <div class="adminLogin-card">
+    <h1>Admin Log-in</h1><br>
+  <div class="adminLogin_Form">
+    <input type="text" name="user" id="Username" placeholder="Username">
+    <input type="password" name="pass" id="Password" placeholder="Password">
+    <button type="button" class="adminLogin__submit">Sign in</button>
+  </div>
+
+  <div class="adminLogin-help">
+    <a href="/Registration.html">Register</a> • <a href="/index.html">User Login</a>
+  </div>
+</div>
+
+<!-- End of Admin Login View -->
+
+
+<!-- Where the Results of all the users will start-->
+<script type="text/javascript" src="/Admin.js"></script>
+<!-- Where the Results of all the users will end-->
+
+
+ <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
+
+<script type="text/javascript" src="/socketcluster.js"></script>
+
+  </body>
+</html>

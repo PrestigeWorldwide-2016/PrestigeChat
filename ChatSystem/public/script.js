@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     var submitPhase1 = 1100,
       submitPhase2 = 400,
       logoutPhase1 = 800,
@@ -6,7 +7,7 @@ $(document).ready(function() {
       $app = $(".app");
 
     $app.hide();
-
+    
 	$(document).on("click", ".login__submit", function(e) {
         var that = this; // what's this?
 
@@ -46,15 +47,17 @@ $(document).ready(function() {
                 throw 'Socket error - ' + err;
             });
 
-            socket.on('connect', function () {
-                console.log(username + ' Connected to server');
-            });
+        socket.on('connect', function () {
+          console.log(username + ' Connected to server');
+          });
 
-            var channelName = "BigGroup";
-            var chatChannel = socket.subscribe(channelName);
-            chatChannel.on('subscribeFail', function(err) {
-                console.log('Failed to subscribe to ' + channelName + ' channel due to error: ' + err);
-            });
+
+          var channelName = "BigGroup";
+          var chatChannel = socket.subscribe(channelName);
+          chatChannel.on('subscribeFail', function(err) {
+          console.log('Failed to subscribe to ' + channelName + ' channel due to error: ' + err);
+          });
+
             console.log("This is the connected channelName: " + channelName);
 
             $('#MessageForm').unbind('submit').bind('submit',function() {
@@ -93,8 +96,7 @@ $(document).ready(function() {
         var openDepartmentNamed = e.target.id();
 
         socket.emit('populateChatWindow', openDepartmentNamed);
-
-
+        
         socket.on('chatReceivedData', function(data) {
                 $('#messages-list').append(
                   '<li>' + data + '</li>'
@@ -103,6 +105,6 @@ $(document).ready(function() {
                     $('div#messages-div')[0].scrollHeight);
               });
             });
-    }
-  });
+        }
+    });
 });
