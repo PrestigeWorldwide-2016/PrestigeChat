@@ -32,7 +32,7 @@ Below is an exact copy of a User Account in the Databse to use as a reference.
     ]
 }
 */
-function validateEmail(email) { 
+function validateEmail(email) {
     // http://stackoverflow.com/a/46181/11236
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
@@ -130,7 +130,7 @@ module.exports.run = function (worker) {
         socket.on('register', function (user, respond) {
             var response = "";
             var invalidInput = false;
-            
+
             if(user.fName.trim().length < 1) {
                 response += "Invalid username, please enter username at least 6 characters in length";
                 invalidInput = true;
@@ -151,7 +151,7 @@ module.exports.run = function (worker) {
                 response += "\nPassword must be longer than 8 characters.";
                 invalidInput = true;
             }
-            
+
             if(invalidInput == true) {
                 respond(response);
             } else {
@@ -198,5 +198,23 @@ module.exports.run = function (worker) {
 				});
 			});
 		});
-	});
-};
+    //---------------------------------------------//
+
+    socket.on('getDepartmentArray', function(username){
+      mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers',
+          function (err, db) {
+              var accountsCollection = db.collection('Accounts');
+              var userDoc = accountsCollection.find({ "uName": username });
+              console.log(username);
+              console.log(userDoc.uName);
+                      socket.emit('receivedDepartmentArray', userDoc.Departments);
+
+                  });
+                });
+
+
+    });
+
+    //--------------------------------------------//
+	};
+// };
