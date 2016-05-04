@@ -110,6 +110,10 @@ $(document).ready(function() {
         ///---------------------------------------------------------------//
         socket.emit('getDepartmentArray', username);
 
+        socket.on('receivedDepartmentArray', function(receivedDepartmentArray){
+        });
+
+        //--------------------------------------------------------------//
         }
     });
 });
