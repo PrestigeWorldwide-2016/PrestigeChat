@@ -106,6 +106,10 @@ $(document).ready(function() {
                     $('div#messages-div')[0].scrollHeight);
               });
             });
+
+        ///---------------------------------------------------------------//
+        socket.emit('getDepartmentArray', username);
+
         }
     });
 });
