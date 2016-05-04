@@ -1,3 +1,4 @@
+var departmentArray = [""];
 $(document).ready(function() {
 
     var submitPhase1 = 1100,
