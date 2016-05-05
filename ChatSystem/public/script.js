@@ -109,11 +109,9 @@ $(document).ready(function() {
 
         ///---------------------------------------------------------------//
         socket.emit('getDepartmentArray', username);
-
+        socket.off('receivedDepartmentArray');
         socket.on('receivedDepartmentArray', function(receivedDepartmentArray){
           departmentArray = receivedDepartmentArray;
-          console.log(departmentArray);
-          console.log(receivedDepartmentArray);
         });
 
         //--------------------------------------------------------------//
