@@ -201,19 +201,19 @@ module.exports.run = function (worker) {
     //---------------------------------------------//
 
     socket.on('getDepartmentArray', function(username){
+      var userInfo = {
+        "uName": username
+      };
       mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers',
           function (err, db) {
               var accountsCollection = db.collection('Accounts');
-              var userDoc = accountsCollection.find({ "uName": username });
-              console.log(username);
-              console.log(userDoc.uName);
-                      socket.emit('receivedDepartmentArray', userDoc.Departments);
-
-                  });
-                });
-
-
-    });
+              var stream = accountsCollection.find(userInfo).stream();
+              stream.on('data', function(userDoc) {
+                socket.emit('receivedDepartmentArray', userDoc.Departments);
+              });
+            });
+          });
+        });
 
     //--------------------------------------------//
 	};
