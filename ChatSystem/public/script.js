@@ -112,6 +112,8 @@ $(document).ready(function() {
 
         socket.on('receivedDepartmentArray', function(receivedDepartmentArray){
           departmentArray = receivedDepartmentArray;
+          console.log(departmentArray);
+          console.log(receivedDepartmentArray);
         });
 
         //--------------------------------------------------------------//
