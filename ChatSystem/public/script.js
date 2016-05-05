@@ -95,7 +95,9 @@ $(document).ready(function() {
 
     $(document).on("click", ".DepartmentName", function(e) {
         var openDepartmentNamed = e.target.id();
-
+        
+        chatChannel = socket.subscribe(openDepartmentNamed);
+        
         socket.emit('populateChatWindow', openDepartmentNamed);
 
         socket.on('chatReceivedData', function(data) {
