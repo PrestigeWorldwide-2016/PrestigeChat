@@ -67,6 +67,12 @@ module.exports.run = function (worker) {
                     } else {
                         respond();
                         console.log('Info is valid.');
+                        //// added in Edit
+                        // grab the pieces from the array
+                        var historyCollection = db.collection(......);
+                        return historyCollection.find().sort({ $natural: -1 }).limit(N);
+                          );
+                        //// added in Edit
                     }
                 });
             });
