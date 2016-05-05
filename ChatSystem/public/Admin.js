@@ -56,8 +56,6 @@ function ConnectAdmin() {
 
 
           socket.on('ServerUserInfo', function (data) {
-            console.log("Getting Server User Info!");
-            console.log(data);
 
 
             var departmentString = "";
@@ -77,14 +75,50 @@ function ConnectAdmin() {
               '<li> Email: <strong>' + data.email + '</strong></li>' +
             //  '<li>' + data.Departments + '</li>' +
 
-              '</ul> Departments Apart of: <ul class="departmentList">' + departmentString + '</ul>' +
-              '<input class= "depToChange"></input>' +
-              '<button type="button" class="addDepartment">Add New</button>' +
-              '<button type="button" class="removeDepartment">Remove</button></div>'
+              '</ul> Departments Apart of: <ul class="departmentList">' + departmentString + '</ul></div>'
             );
+
+            $(document).on("click", ".addDepartment", function(event) {
+              valueOfAddDept = $('#' + data.uName).val();
+            //  console.log("This is the id of the button " + document.getElementByID(event));
+              console.log("This is the value of the text box " + valueOfAddDept);
+                });
 
           });
 
+
+$(document).on("click", ".AddDept", function(event) {
+  
+    var e = document.getElementById("SelectedDept");
+    var selection = e.options[e.selectedIndex].value;
+    console.log("The value of the clicked element is " + selection);
+    EnteredName = $('#uNameDept').val();
+    console.log("The entered username is: " + EnteredName);
+    var AddInfo = {
+      "DepartmentSel": selection,
+      "uNameEntered": EnteredName
+    };
+
+    socket.emit("addDepartment", AddInfo);
+
+});
+
+
+$(document).on("click", ".RemoveDept", function(event) {
+
+    var e = document.getElementById("SelectedDept");
+    var selection = e.options[e.selectedIndex].value;
+    console.log("The value of the clicked element is " + selection);
+    EnteredName = $('#uNameDept').val();
+    console.log("The entered username is: " + EnteredName);
+    var RemoveInfo = {
+      "DepartmentSel": selection,
+      "uNameEntered": EnteredName
+    };
+
+    socket.emit("removeDepartment", RemoveInfo);
+
+});
 
           //Code from scriptJS left in here to view as an example
           /*
