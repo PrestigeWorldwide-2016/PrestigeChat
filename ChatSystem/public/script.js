@@ -10,8 +10,8 @@ $(document).ready(function() {
     $app.hide();
 
 	$(document).on("click", ".login__submit", function(e) {
-        var that = this; // what's this?
-
+        var that = this;
+        
         var socket = socketCluster.connect();
         var username = $('#Username').val();
         var userpass = $('#Password').val();
@@ -23,18 +23,14 @@ $(document).ready(function() {
         socket.emit('login', user, function (err) {
             if (err) {
                 console.log(err);
-                //location.reload();
             }
             else {
                 setTimeout(function() {
                     setTimeout(function() {
                         $app.show();
-              //        $app.css("top");
-              //        $app.addClass("active");
                     }, submitPhase2 - 70);
                     setTimeout(function() {
                         $login.hide();
-              //        $login.addClass("inactive");
                     }, submitPhase2);
                 }, submitPhase1);
 

@@ -21,18 +21,14 @@ var   submitPhase1 = 1100,
 
       if (err) {
         console.log(err);
-        //location.reload();
       }
       else {
     setTimeout(function() {
       setTimeout(function() {
         $app.show();
-//        $app.css("top");
-  //      $app.addClass("active");
       }, submitPhase2 - 70);
       setTimeout(function() {
         $adminlogin.hide();
-  //      $login.addClass("inactive");
         }, submitPhase2);
 
       }, submitPhase1);
@@ -73,14 +69,11 @@ function ConnectAdmin() {
               '<li> Last Name: <strong>' + data.lName + '</strong></li>' +
               '<li> Username: <strong>' + data.uName + '</strong></li>' +
               '<li> Email: <strong>' + data.email + '</strong></li>' +
-            //  '<li>' + data.Departments + '</li>' +
-
               '</ul> Departments Apart of: <ul class="departmentList">' + departmentString + '</ul></div>'
             );
 
             $(document).on("click", ".addDepartment", function(event) {
               valueOfAddDept = $('#' + data.uName).val();
-            //  console.log("This is the id of the button " + document.getElementByID(event));
               console.log("This is the value of the text box " + valueOfAddDept);
                 });
 
