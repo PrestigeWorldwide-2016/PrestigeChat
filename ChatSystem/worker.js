@@ -31,12 +31,9 @@ Below is an exact copy of a User Account in the Databse to use as a reference.
         "RD"
     ]
 }
-
-
 */
 function validateEmail(email) {
-  // http://stackoverflow.com/a/46181/11236
-
+    // http://stackoverflow.com/a/46181/11236
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
@@ -57,7 +54,6 @@ module.exports.run = function (worker) {
     In here we handle our incoming realtime connections and listen for events.
   */
 
-
     scServer.on('connection', function (socket) {
         socket.on('login', function (user, respond) {
             console.log(user.uName + " Connected");
@@ -75,8 +71,7 @@ module.exports.run = function (worker) {
             });
         });
 
-//Start of Admin Section
-
+        //Start of Admin Section
         //Admin Login Check
         socket.on('loginAdmin', function (user, respond) {
               console.log(user.uName + " Connected");
@@ -97,39 +92,16 @@ module.exports.run = function (worker) {
 
       //Admin Throwing Back all the users to client
       socket.on('GetUserInfo', function () {
-            // open a connection to the database
-			      mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
-                var UserCollection = db.collection('Accounts');
-				        var stream = UserCollection.find().stream();
-				            stream.on('data', function(allUsersInfo) {
-					                 socket.emit('ServerUserInfo', allUsersInfo);
-				            });
-			      });
+      /* For inside of here, connect to the mongodb, specify the collection
+      you want to get data from, then set a variable to stream the results of a find()
+      to get all of the users. While that stream is on (don't use an actual while loop)
+      do a socket.emit of the userObject it is streaming. IMPORTANT 'data' is a
+      reserved word for stream.on, you can pass out any placeholder name in the
+      socket.emit though within the stream.on, just has to match the function
+      name above it.
+       */
       });
 
-      socket.on('addDepartment', function (AddInfo) {
-          console.log("This is the username to add: " + AddInfo.uNameEntered);
-          console.log("This is the deparment to be added: " + AddInfo.DepartmentSel);
-          mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
-              var accountsCollection = db.collection('Accounts');
-              accountsCollection.update(
-                 { uName: AddInfo.uNameEntered },
-                 { $push: { Departments: AddInfo.DepartmentSel } }
-              )
-          });
-      });
-
-      socket.on('removeDepartment', function (RemoveInfo) {
-          console.log("This is the username to add: " + RemoveInfo.uNameEntered);
-          console.log("This is the deparment to be added: " + RemoveInfo.DepartmentSel);
-          mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
-              var accountsCollection = db.collection('Accounts');
-              accountsCollection.update(
-                 { uName: RemoveInfo.uNameEntered },
-                 { $pull: { Departments: RemoveInfo.DepartmentSel } }
-              )
-          });
-      });
 
 //End of Admin Section
 
@@ -226,5 +198,23 @@ module.exports.run = function (worker) {
 				});
 			});
 		});
-	});
-};
+    //---------------------------------------------//
+
+    socket.on('getDepartmentArray', function(username){
+      var userInfo = {
+        "uName": username
+      };
+      mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers',
+          function (err, db) {
+              var accountsCollection = db.collection('Accounts');
+              var stream = accountsCollection.find(userInfo).stream();
+              stream.on('data', function(userDoc) {
+                socket.emit('receivedDepartmentArray', userDoc.Departments);
+              });
+            });
+          });
+        });
+
+    //--------------------------------------------//
+	};
+// };
