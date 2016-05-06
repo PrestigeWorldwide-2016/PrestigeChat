@@ -92,16 +92,39 @@ module.exports.run = function (worker) {
 
       //Admin Throwing Back all the users to client
       socket.on('GetUserInfo', function () {
-      /* For inside of here, connect to the mongodb, specify the collection
-      you want to get data from, then set a variable to stream the results of a find()
-      to get all of the users. While that stream is on (don't use an actual while loop)
-      do a socket.emit of the userObject it is streaming. IMPORTANT 'data' is a
-      reserved word for stream.on, you can pass out any placeholder name in the
-      socket.emit though within the stream.on, just has to match the function
-      name above it.
-       */
+         mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
+             var UserCollection = db.collection('Accounts');
+             var stream = UserCollection.find().stream();
+                 stream.on('data', function(allUsersInfo) {
+                        socket.emit('ServerUserInfo', allUsersInfo);
+                 });
+         });
       });
 
+
+      socket.on('addDepartment', function (AddInfo) {
+          console.log("This is the username to add: " + AddInfo.uNameEntered);
+          console.log("This is the deparment to be added: " + AddInfo.DepartmentSel);
+          mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
+              var accountsCollection = db.collection('Accounts');
+              accountsCollection.update(
+                 { uName: AddInfo.uNameEntered },
+                 { $push: { Departments: AddInfo.DepartmentSel } }
+              )
+          });
+      });
+
+      socket.on('removeDepartment', function (RemoveInfo) {
+          console.log("This is the username to add: " + RemoveInfo.uNameEntered);
+          console.log("This is the deparment to be added: " + RemoveInfo.DepartmentSel);
+          mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
+              var accountsCollection = db.collection('Accounts');
+              accountsCollection.update(
+                 { uName: RemoveInfo.uNameEntered },
+                 { $pull: { Departments: RemoveInfo.DepartmentSel } }
+              )
+          });
+      });
 
 //End of Admin Section
 
