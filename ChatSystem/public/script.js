@@ -90,7 +90,14 @@ $(document).ready(function() {
             });
 
     $(document).on("click", ".DepartmentName", function(e) {
+        // Have to try to splice just the first word of the text
+        var openDepartmentNamed = $(e.target).text();
+
+        console.log("This is clicked department name: " + openDepartmentNamed);
+
+        socket.unsubscribe();
         chatChannel = socket.subscribe(openDepartmentNamed);
+
         socket.emit('populateChatWindow', openDepartmentNamed);
 
         socket.on('chatReceivedData', function(data) {
@@ -100,6 +107,7 @@ $(document).ready(function() {
                 $('div#messages-div').scrollTop(
                     $('div#messages-div')[0].scrollHeight);
               });
+    });
 
         ///---------------------------------------------------------------//
         socket.emit('getDepartmentArray', username);
