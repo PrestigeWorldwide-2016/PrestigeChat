@@ -90,10 +90,7 @@ $(document).ready(function() {
             });
 
     $(document).on("click", ".DepartmentName", function(e) {
-        var openDepartmentNamed = e.target.id();
-        
         chatChannel = socket.subscribe(openDepartmentNamed);
-        
         socket.emit('populateChatWindow', openDepartmentNamed);
 
         socket.on('chatReceivedData', function(data) {
@@ -103,7 +100,6 @@ $(document).ready(function() {
                 $('div#messages-div').scrollTop(
                     $('div#messages-div')[0].scrollHeight);
               });
-            });
 
         ///---------------------------------------------------------------//
         socket.emit('getDepartmentArray', username);
