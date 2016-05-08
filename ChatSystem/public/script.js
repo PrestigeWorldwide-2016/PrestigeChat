@@ -1,4 +1,3 @@
-var departmentArray = [""];
 $(document).ready(function() {
 
     var submitPhase1 = 1100,
@@ -8,7 +7,7 @@ $(document).ready(function() {
       $app = $(".app");
 
     $app.hide();
-
+    
 	$(document).on("click", ".login__submit", function(e) {
         var that = this; // what's this?
 
@@ -95,11 +94,9 @@ $(document).ready(function() {
 
     $(document).on("click", ".DepartmentName", function(e) {
         var openDepartmentNamed = e.target.id();
-        
-        chatChannel = socket.subscribe(openDepartmentNamed);
-        
-        socket.emit('populateChatWindow', openDepartmentNamed);
 
+        socket.emit('populateChatWindow', openDepartmentNamed);
+        
         socket.on('chatReceivedData', function(data) {
                 $('#messages-list').append(
                   '<li>' + data + '</li>'
@@ -108,15 +105,6 @@ $(document).ready(function() {
                     $('div#messages-div')[0].scrollHeight);
               });
             });
-
-        ///---------------------------------------------------------------//
-        socket.emit('getDepartmentArray', username);
-        socket.off('receivedDepartmentArray');
-        socket.on('receivedDepartmentArray', function(receivedDepartmentArray){
-          departmentArray = receivedDepartmentArray;
-        });
-
-        //--------------------------------------------------------------//
         }
     });
 });
