@@ -38,6 +38,26 @@ function validateEmail(email) {
     return re.test(email);
 }
 
+function escapeHtml(unsafe) {
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+}
+
+function sanitizeYourInput(user) {
+    user.fName = escapeHtml(user.fName);
+    user.lName = escapeHtml(user.lName);
+    user.email = escapeHtml(user.email);
+    user.uName = escapeHtml(user.uName);
+    user.password = escapeHtml(user.password);  
+    
+    return user;
+}
+
+
 module.exports.run = function (worker) {
     console.log('   >> Worker PID:', process.pid);
     var app = require('express')();
@@ -57,8 +77,8 @@ module.exports.run = function (worker) {
     scServer.on('connection', function (socket) {
         socket.on('login', function (user, respond) {
             
-            user.uName = bleach.sanitize(user.uName);
-            user.uName = bleach.sanitize(user.uName);
+            user.uName = escapeHtml(user.uName);
+            user.password = escapeHtml(user.password);
             
             console.log(user.uName + " Connected");
             mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
@@ -78,7 +98,11 @@ module.exports.run = function (worker) {
         //Start of Admin Section
         //Admin Login Check
         socket.on('loginAdmin', function (user, respond) {
-              console.log(user.uName + " Connected");
+            
+            user.uName = escapeHtml(user.uName);
+            user.uPassword = escapeHtml(user.password);
+            
+            console.log(user.uName + " Connected");
               mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
                   var accountsCollection = db.collection('adminAccounts');
                   accountsCollection.find(user).count(function (err, count) {
@@ -174,7 +198,15 @@ module.exports.run = function (worker) {
         socket.on('register', function (user, respond) {
             var response = "";
             var invalidInput = false;
-
+            user = sanitizeUser(user);
+            console.log("Console logging user after sanitization: \n" + 
+                        user.fName + '\n' + 
+                        user.lName + '\n' + 
+                        user.email + '\n' + 
+                        user.uName + '\n' + 
+                        user.password + '\n--------------'
+                       );
+            
             if(user.fName.trim().length < 1) {
                 response += "Invalid username, please enter username at least 6 characters in length";
                 invalidInput = true;
@@ -246,8 +278,7 @@ module.exports.run = function (worker) {
               });
             });
           });
-        });
-
+        });    
     //--------------------------------------------//
 	};
 // };
