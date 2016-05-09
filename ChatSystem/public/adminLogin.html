@@ -20,7 +20,7 @@
   <div class="adminLogin_Form">
     <input type="text" name="user" id="Username" placeholder="Username">
     <input type="password" name="pass" id="Password" placeholder="Password">
-    <button type="button" class="adminLogin__submit">Sign in</button>
+    <button type="button" class="adminLogin__submit" style="display: block; margin: 0 auto;">Sign in</button>
   </div>
 
   <div class="adminLogin-help">
@@ -30,16 +30,36 @@
 
 <!-- End of Admin Login View -->
 
+<!-- Admin Window Functions -->
+<div class="app">
 
-<!-- Where the Results of all the users will start-->
-<script type="text/javascript" src="/Admin.js"></script>
-<!-- Where the Results of all the users will end-->
+<div class="userBlock">
+
+<input id="uNameDept" class="UsernameForDept" value="Username"> </input>
+
+<select id="SelectedDept">
+  <option value="General">General</option>
+  <option value="Marketing">Marketing</option>
+  <option value="Engineering">Engineering</option>
+  <option value="HR">HR</option>
+  <option value="Accounting">Accounting</option>
+  <option value="RD">RD</option>
+</select>
+
+<button class="AddDept" > Add Department </button>
+<button class="RemoveDept"> Remove Department </button>
+
+
+</div>
+
+</div>
 
 
  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
 
 <script type="text/javascript" src="/socketcluster.js"></script>
+<script type="text/javascript" src="/Admin.js"></script>
 
   </body>
 </html>
