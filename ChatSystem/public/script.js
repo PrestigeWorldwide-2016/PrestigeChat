@@ -1,4 +1,3 @@
-var departmentArray = [""];
 $(document).ready(function() {
 
     var submitPhase1 = 1100,
@@ -11,7 +10,7 @@ $(document).ready(function() {
 
 	$(document).on("click", ".login__submit", function(e) {
         var that = this;
-        
+
         var socket = socketCluster.connect();
         var username = $('#Username').val();
         var userpass = $('#Password').val();
@@ -68,16 +67,6 @@ $(document).ready(function() {
                 return false;
             });
 
-			var userCred = { uName: username };
-            socket.emit('getChatMessages', userCred);
-			socket.on('chatPanelData', function(data) {
-                $('#channels-list').append(
-                  '<li class="DepartmentName id=' + data.channelName + '><span style="font-weight: bold">'
-                  + data.displayName
-                  + '</span> <br> <span style="color:blue">'
-                  + data.chatHistory
-                  + '</span> </li>');
-			        });
 
             chatChannel.watch(function (data) {
                  $('#messages-list').append('<li>' + data + '</li>');
@@ -88,6 +77,7 @@ $(document).ready(function() {
                  $('div#messages-div').scrollTop(
                      $('div#messages-div')[0].scrollHeight);
             });
+
 
     $(document).on("click", ".DepartmentName", function(e) {
         // Have to try to splice just the first word of the text
@@ -109,13 +99,21 @@ $(document).ready(function() {
               });
     });
 
-        ///---------------------------------------------------------------//
+        //---------------------------------------------------------------//
         socket.emit('getDepartmentArray', username);
-        socket.off('receivedDepartmentArray');
         socket.on('receivedDepartmentArray', function(receivedDepartmentArray){
-          departmentArray = receivedDepartmentArray;
+        console.log("Received Array: " + receivedDepartmentArray);
+        socket.emit('getChannelHistory', receivedDepartmentArray);
         });
 
+        socket.on('gottenChannelHistory', function(data){
+          $('#channels-list').append(
+            '<li class="DepartmentName id=' + data.UserChannel + '><span style="font-weight: bold">'
+            + data.UserChannel
+            + '</span> <br> <span style="color:blue">'
+            + data.UserMessage
+            + '</span> </li>');
+        });
         //--------------------------------------------------------------//
         }
     });

@@ -132,6 +132,22 @@ module.exports.run = function (worker) {
             console.log('User disconnected');
         });
 
+
+        socket.on('getChannelHistory', function(departmentArray){
+          console.log("This is the second index of department Array: " + departmentArray[1]);
+            // open a connection to the database
+            mongo.connect('mongodb://prestigedbuser:dbpassword@ds021010.mlab.com:21010/prestigechat', function (err, db) {
+              for(k = 0; k < departmentArray.length; k++) {
+                var chatCollection = db.collection(departmentArray[k]);
+                var stream = chatCollection.find().limit(1).sort({$natural:-1}).stream();
+                stream.on('data', function(DeptObj) {
+                  socket.emit('gottenChannelHistory', DeptObj);
+                });
+              }
+            });
+          });
+
+
         socket.on('chat', function (data) {
             scServer.global.publish(data.UserChannel, data.UserMessage);
       			// mongo connect and find the collection
@@ -199,16 +215,6 @@ module.exports.run = function (worker) {
             }
         });
 
-        socket.on('getChatMessages', function(userCredentials){
-            // open a connection to the database
-			mongo.connect('mongodb://prestigedbuser:dbpassword@ds021010.mlab.com:21010/prestigechat', function (err, db) {
-                var chatCollection = db.collection('chatList');
-				var stream = chatCollection.find(userCredentials).stream();
-				stream.on('data', function(listOfFind) {
-					socket.emit('chatPanelData', listOfFind);
-				});
-			});
-		});
 
         socket.on('populateChatWindow', function(departmentName){
             // open a connection to the database
