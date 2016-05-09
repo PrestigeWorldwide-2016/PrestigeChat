@@ -14,25 +14,21 @@ var   submitPhase1 = 1100,
     var userpass = $('#Password').val();
     var user = {
       uName: username,
-      password: userpass
+      uPassword: userpass
     };
 
-    socket.emit('adminLogin', user, function (err) {
+    socket.emit('loginAdmin', user, function (err) {
 
       if (err) {
         console.log(err);
-        //location.reload();
       }
       else {
     setTimeout(function() {
       setTimeout(function() {
         $app.show();
-//        $app.css("top");
-  //      $app.addClass("active");
       }, submitPhase2 - 70);
       setTimeout(function() {
-        $login.hide();
-  //      $login.addClass("inactive");
+        $adminlogin.hide();
         }, submitPhase2);
 
       }, submitPhase1);
@@ -55,18 +51,67 @@ function ConnectAdmin() {
           socket.emit('GetUserInfo');
 
 
-          /* Waits for server to emit 'ServerUserInfo', data is a
-          reserved variable name for each User object that is streamed to
-          the client it is reserved at the server during stream.on */
           socket.on('ServerUserInfo', function (data) {
-            /* Included in here is javascript HTML that will be sent to the
-            webpage, it will be a mix of HTML in quotes and javascript object
-            references for the content of what's inside the elemnents (div's,
-             li's, etc.)  Don't forget you will have to use forEach functions
-             for parts of the user object that contain arrays */
+
+
+            var departmentString = "";
+            if (data.Departments.length) {
+            for (k=0; k < data.Departments.length; k++) {
+              departmentString += '<li>' + data.Departments[k] + '</li>' ;
+            }
+            }
+            else {departmentString = '<li> No Departments for this User </li>'}
+
+
+            $('div.app').append(
+              '<div class="userBlock"><ul class="userList">' +
+              '<li> First Name: <strong>' + data.fName + '</strong></li>' +
+              '<li> Last Name: <strong>' + data.lName + '</strong></li>' +
+              '<li> Username: <strong>' + data.uName + '</strong></li>' +
+              '<li> Email: <strong>' + data.email + '</strong></li>' +
+              '</ul> Departments Apart of: <ul class="departmentList">' + departmentString + '</ul></div>'
+            );
+
+            $(document).on("click", ".addDepartment", function(event) {
+              valueOfAddDept = $('#' + data.uName).val();
+              console.log("This is the value of the text box " + valueOfAddDept);
+                });
 
           });
-          
+
+
+$(document).on("click", ".AddDept", function(event) {
+  
+    var e = document.getElementById("SelectedDept");
+    var selection = e.options[e.selectedIndex].value;
+    console.log("The value of the clicked element is " + selection);
+    EnteredName = $('#uNameDept').val();
+    console.log("The entered username is: " + EnteredName);
+    var AddInfo = {
+      "DepartmentSel": selection,
+      "uNameEntered": EnteredName
+    };
+
+    socket.emit("addDepartment", AddInfo);
+
+});
+
+
+$(document).on("click", ".RemoveDept", function(event) {
+
+    var e = document.getElementById("SelectedDept");
+    var selection = e.options[e.selectedIndex].value;
+    console.log("The value of the clicked element is " + selection);
+    EnteredName = $('#uNameDept').val();
+    console.log("The entered username is: " + EnteredName);
+    var RemoveInfo = {
+      "DepartmentSel": selection,
+      "uNameEntered": EnteredName
+    };
+
+    socket.emit("removeDepartment", RemoveInfo);
+
+});
 
           //Code from scriptJS left in here to view as an example
           /*

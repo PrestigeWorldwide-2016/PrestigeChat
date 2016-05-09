@@ -1,4 +1,4 @@
-//Start Registration=====================
+//Start Registration
 
 $(document).ready(function() {
 
@@ -38,3 +38,5 @@ $(document).ready(function() {
         }
     });
 });
+
+//End Registration

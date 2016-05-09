@@ -33,7 +33,7 @@ Below is an exact copy of a User Account in the Databse to use as a reference.
 }
 */
 function validateEmail(email) {
-    // http://stackoverflow.com/a/46181/11236
+
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
@@ -92,22 +92,61 @@ module.exports.run = function (worker) {
 
       //Admin Throwing Back all the users to client
       socket.on('GetUserInfo', function () {
-      /* For inside of here, connect to the mongodb, specify the collection
-      you want to get data from, then set a variable to stream the results of a find()
-      to get all of the users. While that stream is on (don't use an actual while loop)
-      do a socket.emit of the userObject it is streaming. IMPORTANT 'data' is a
-      reserved word for stream.on, you can pass out any placeholder name in the
-      socket.emit though within the stream.on, just has to match the function
-      name above it.
-       */
+         mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
+             var UserCollection = db.collection('Accounts');
+             var stream = UserCollection.find().stream();
+                 stream.on('data', function(allUsersInfo) {
+                        socket.emit('ServerUserInfo', allUsersInfo);
+                 });
+         });
       });
 
+
+      socket.on('addDepartment', function (AddInfo) {
+          console.log("This is the username to add: " + AddInfo.uNameEntered);
+          console.log("This is the deparment to be added: " + AddInfo.DepartmentSel);
+          mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
+              var accountsCollection = db.collection('Accounts');
+              accountsCollection.update(
+                 { uName: AddInfo.uNameEntered },
+                 { $push: { Departments: AddInfo.DepartmentSel } }
+              )
+          });
+      });
+
+      socket.on('removeDepartment', function (RemoveInfo) {
+          console.log("This is the username to add: " + RemoveInfo.uNameEntered);
+          console.log("This is the deparment to be added: " + RemoveInfo.DepartmentSel);
+          mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
+              var accountsCollection = db.collection('Accounts');
+              accountsCollection.update(
+                 { uName: RemoveInfo.uNameEntered },
+                 { $pull: { Departments: RemoveInfo.DepartmentSel } }
+              )
+          });
+      });
 
 //End of Admin Section
 
         socket.on('disconnect', function () {
             console.log('User disconnected');
         });
+
+
+        socket.on('getChannelHistory', function(departmentArray){
+          console.log("This is the second index of department Array: " + departmentArray[1]);
+            // open a connection to the database
+            mongo.connect('mongodb://prestigedbuser:dbpassword@ds021010.mlab.com:21010/prestigechat', function (err, db) {
+              for(k = 0; k < departmentArray.length; k++) {
+                var chatCollection = db.collection(departmentArray[k]);
+                var stream = chatCollection.find().limit(1).sort({$natural:-1}).stream();
+                stream.on('data', function(DeptObj) {
+                  socket.emit('gottenChannelHistory', DeptObj);
+                });
+              }
+            });
+          });
+
 
         socket.on('chat', function (data) {
             scServer.global.publish(data.UserChannel, data.UserMessage);
@@ -118,13 +157,14 @@ module.exports.run = function (worker) {
 
             //new obj that holds the most recent message
                         var rcvdMsg = {
-                          "content" : thisMessage
-                        }
-            //
+                          "UserMessage" : thisMessage,
+                          "UserChannel" : thisChannel
+                        };
+
                         mongo.connect('mongodb://prestigedbuser:dbpassword@ds021010.mlab.com:21010/prestigechat', function (err, db) {
                                   var chatCollection = db.collection(thisChannel);
                                   chatCollection.insertOne(rcvdMsg);
-                                })
+                                });
         });
 
         socket.on('register', function (user, respond) {
@@ -176,25 +216,14 @@ module.exports.run = function (worker) {
             }
         });
 
-        socket.on('getChatMessages', function(userCredentials){
-            // open a connection to the database
-			mongo.connect('mongodb://prestigedbuser:dbpassword@ds021010.mlab.com:21010/prestigechat', function (err, db) {
-                var chatCollection = db.collection('chatList');
-				var stream = chatCollection.find(userCredentials).stream();
-				stream.on('data', function(listOfFind) {
-					socket.emit('chatPanelData', listOfFind);
-				});
-			});
-		});
 
         socket.on('populateChatWindow', function(departmentName){
-            // open a connection to the database
-			mongo.connect('mongodb://prestigedbuser:dbpassword@ds021010.mlab.com:21010/prestigechat', function (err, db) {
-                var chatCollection = db.collection(departmentName);
 
+			mongo.connect('mongodb://prestigedbuser:dbpassword@ds021010.mlab.com:21010/prestigechat', function (err, db) {
+        var chatCollection = db.collection(departmentName);
 				var stream = chatCollection.find().stream();
 				stream.on('data', function(messageObject) {
-					socket.emit('chatReceivedData', messageObject.content);
+					socket.emit('chatReceivedData', messageObject.UserMessage);
 				});
 			});
 		});
