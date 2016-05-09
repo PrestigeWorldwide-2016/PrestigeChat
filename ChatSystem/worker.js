@@ -56,6 +56,10 @@ module.exports.run = function (worker) {
 
     scServer.on('connection', function (socket) {
         socket.on('login', function (user, respond) {
+            
+            user.uName = bleach.sanitize(user.uName);
+            user.uName = bleach.sanitize(user.uName);
+            
             console.log(user.uName + " Connected");
             mongo.connect('mongodb://prestigedbuser:dbpassword@ds019940.mlab.com:19940/prestigeusers', function (err, db) {
                 var accountsCollection = db.collection('Accounts');
