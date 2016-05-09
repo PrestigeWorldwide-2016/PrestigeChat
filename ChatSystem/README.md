@@ -1,4 +1,1 @@
-SocketCluster Sample App
-======
-
-This is a sample SocketCluster app.
+PrestigeChat project for CS 441

@@ -1,17 +1,18 @@
 {
-  "name": "socketcluster-sample",
-  "description": "A sample SocketCluster app",
+  "name": "PrestigeChat",
+  "description": "Messaging App project for CS 441",
   "version": "1.0.0",
   "contributors": [
     {
-      "name": "Jonathan Gros-Dubois",
-      "email": "grosjona@yahoo.com.au"
+      "name": "Austin Marsella",
+      "email": "amarsella5700@gmail.com"
     }
   ],
   "dependencies": {
     "connect": "3.0.1",
     "express": "4.13.1",
     "minimist": "1.1.0",
+    "mongodb": "4.4.2",
     "serve-static": "1.8.0",
     "socketcluster": "4.x.x",
     "socketcluster-client": "4.x.x"
@@ -23,5 +24,9 @@
     "cluster",
     "scalable"
   ],
+  "scripts": {
+  "start": "node server.js"
+  },
+  "main": "server.js",
   "readmeFilename": "README.md"
 }
