@@ -2,6 +2,9 @@
   "name": "PrestigeChat",
   "description": "Messaging App project for CS 441",
   "version": "1.0.0",
+  "engines": {
+  "node": "4.1.1"
+   },
   "scripts": {
   "start": "node server.js"
   },
