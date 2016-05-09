@@ -1,4 +1,4 @@
-
-ChatSystem/log.db
-
-ChatSystem/public/chatRowScript.js
+/node_modules
+npm-debug.log
+.DS_Store
+/*.env

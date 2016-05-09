@@ -1,0 +1,35 @@
+{
+  "name": "PrestigeChat",
+  "description": "Messaging App project for CS 441",
+  "version": "1.0.0",
+  "engines": {
+  "node": "4.1.1"
+   },
+  "scripts": {
+  "start": "node server.js"
+  },
+  "main": "server.js",
+  "contributors": [
+    {
+      "name": "Austin Marsella",
+      "email": "amarsella5700@gmail.com"
+    }
+  ],
+  "dependencies": {
+    "connect": "3.0.1",
+    "express": "4.13.1",
+    "minimist": "1.1.0",
+    "mongodb": "2.1.18",
+    "serve-static": "1.8.0",
+    "socketcluster": "4.x.x",
+    "socketcluster-client": "4.x.x"
+  },
+  "keywords": [
+    "websocket",
+    "server",
+    "realtime",
+    "cluster",
+    "scalable"
+  ],
+  "readmeFilename": "README.md"
+}
