@@ -33,7 +33,7 @@ Below is an exact copy of a User Account in the Databse to use as a reference.
 }
 */
 function validateEmail(email) {
-    // http://stackoverflow.com/a/46181/11236
+
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
@@ -157,13 +157,14 @@ module.exports.run = function (worker) {
 
             //new obj that holds the most recent message
                         var rcvdMsg = {
-                          "content" : thisMessage
-                        }
-            //
+                          "UserMessage" : thisMessage,
+                          "UserChannel" : thisChannel
+                        };
+
                         mongo.connect('mongodb://prestigedbuser:dbpassword@ds021010.mlab.com:21010/prestigechat', function (err, db) {
                                   var chatCollection = db.collection(thisChannel);
                                   chatCollection.insertOne(rcvdMsg);
-                                })
+                                });
         });
 
         socket.on('register', function (user, respond) {

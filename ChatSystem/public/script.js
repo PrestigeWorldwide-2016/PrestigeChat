@@ -54,18 +54,7 @@ $(document).ready(function() {
           console.log('Failed to subscribe to ' + channelName + ' channel due to error: ' + err);
           });
 
-            console.log("This is the connected channelName: " + channelName);
-
-            $('#MessageForm').unbind('submit').bind('submit',function() {
-                if($('#message').val() != '') {
-                    socket.emit('chat', {
-                        UserMessage: username + ":  " + $('#message').val(),
-                        UserChannel: channelName
-                    });
-                }
-                $('#message').val('');
-                return false;
-            });
+      $("#messages-list").empty();
 
 
             chatChannel.watch(function (data) {
@@ -83,7 +72,18 @@ $(document).ready(function() {
         // Have to try to splice just the first word of the text
         var openDepartmentNamed = $(e.target).text();
 
-        console.log("This is clicked department name: " + openDepartmentNamed);
+          console.log("This is the connected channelName: " + DeptClickedName);
+
+          $('#MessageForm').unbind('submit').bind('submit',function() {
+              if($('#message').val() != '') {
+                  socket.emit('chat', {
+                      UserMessage: username + ":  " + $('#message').val(),
+                      UserChannel: DeptClickedName
+                  });
+              }
+              $('#message').val('');
+              return false;
+          });
 
         socket.unsubscribe();
         chatChannel = socket.subscribe(openDepartmentNamed);
