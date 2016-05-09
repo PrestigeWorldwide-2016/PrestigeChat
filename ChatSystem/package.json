@@ -2,6 +2,10 @@
   "name": "PrestigeChat",
   "description": "Messaging App project for CS 441",
   "version": "1.0.0",
+  "scripts": {
+  "start": "node server.js"
+  },
+  "main": "server.js",
   "contributors": [
     {
       "name": "Austin Marsella",
@@ -24,9 +28,5 @@
     "cluster",
     "scalable"
   ],
-  "scripts": {
-  "start": "node server.js"
-  },
-  "main": "server.js",
   "readmeFilename": "README.md"
 }
