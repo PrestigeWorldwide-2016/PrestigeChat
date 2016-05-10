@@ -50,9 +50,6 @@ module.exports.run = function (worker) {
     httpServer.on('request', app);
 
     var count = 0;
-    /*
-    In here we handle our incoming realtime connections and listen for events.
-  */
 
     scServer.on('connection', function (socket) {
         socket.on('login', function (user, respond) {
@@ -150,7 +147,7 @@ module.exports.run = function (worker) {
 
         socket.on('chat', function (data) {
             scServer.global.publish(data.UserChannel, data.UserMessage);
-      			// mongo connect and find the collection
+
             var thisChannel = data.UserChannel;
             var thisMessage = data.UserMessage;
             console.log(thisMessage + ' ----- was posted inside the channel: ' + thisChannel);
@@ -217,7 +214,7 @@ module.exports.run = function (worker) {
         });
 
 
-        socket.on('populateChatWindow', function(departmentName){
+      socket.on('populateChatWindow', function(departmentName){
 
 			mongo.connect('mongodb://prestigedbuser:dbpassword@ds021010.mlab.com:21010/prestigechat', function (err, db) {
         var chatCollection = db.collection(departmentName);
@@ -246,4 +243,3 @@ module.exports.run = function (worker) {
 
     //--------------------------------------------//
 	};
-// };

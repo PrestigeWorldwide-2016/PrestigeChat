@@ -77,68 +77,43 @@ function ConnectAdmin() {
               console.log("This is the value of the text box " + valueOfAddDept);
                 });
 
-          });
+        });
 
 
-$(document).on("click", ".AddDept", function(event) {
-  
-    var e = document.getElementById("SelectedDept");
-    var selection = e.options[e.selectedIndex].value;
-    console.log("The value of the clicked element is " + selection);
-    EnteredName = $('#uNameDept').val();
-    console.log("The entered username is: " + EnteredName);
-    var AddInfo = {
-      "DepartmentSel": selection,
-      "uNameEntered": EnteredName
-    };
+        $(document).on("click", ".AddDept", function(event) {
 
-    socket.emit("addDepartment", AddInfo);
+          var e = document.getElementById("SelectedDept");
+          var selection = e.options[e.selectedIndex].value;
+          console.log("The value of the clicked element is " + selection);
+          EnteredName = $('#uNameDept').val();
+          console.log("The entered username is: " + EnteredName);
+          var AddInfo = {
+            "DepartmentSel": selection,
+            "uNameEntered": EnteredName
+          };
 
-});
+          socket.emit("addDepartment", AddInfo);
 
-
-$(document).on("click", ".RemoveDept", function(event) {
-
-    var e = document.getElementById("SelectedDept");
-    var selection = e.options[e.selectedIndex].value;
-    console.log("The value of the clicked element is " + selection);
-    EnteredName = $('#uNameDept').val();
-    console.log("The entered username is: " + EnteredName);
-    var RemoveInfo = {
-      "DepartmentSel": selection,
-      "uNameEntered": EnteredName
-    };
-
-    socket.emit("removeDepartment", RemoveInfo);
-
-});
-
-          //Code from scriptJS left in here to view as an example
-          /*
-          var channelName = "BigGroup";
-          var chatChannel = socket.subscribe(channelName);
-          chatChannel.on('subscribeFail', function(err) {
-          console.log('Failed to subscribe to ' + channelName + ' channel due to error: ' + err);
-            });
-          console.log("This is the connected channelName: " + channelName);
+        });
 
 
-          $('#MessageForm').unbind('submit').bind('submit',function() {
-           if($('#message').val() != '') {
-             socket.emit('chat',{ UserMessage: username + ":  " + $('#message').val(), UserChannel: channelName});
-               }
-             $('#message').val('');
-             return false;
-           });
+        $(document).on("click", ".RemoveDept", function(event) {
 
-           chatChannel.watch(function (data) {
-             $('#messages-list').append($('<li>').text(data));
-             $('div#messages-div').scrollTop($('div#messages-div')[0].scrollHeight)
-             });
-             */
+          var e = document.getElementById("SelectedDept");
+          var selection = e.options[e.selectedIndex].value;
+          console.log("The value of the clicked element is " + selection);
+          EnteredName = $('#uNameDept').val();
+          console.log("The entered username is: " + EnteredName);
+          var RemoveInfo = {
+            "DepartmentSel": selection,
+            "uNameEntered": EnteredName
+          };
 
-    }
+          socket.emit("removeDepartment", RemoveInfo);
+
+        });
+
+  }
 
   });
-
 });

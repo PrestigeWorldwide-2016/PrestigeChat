@@ -81,10 +81,8 @@ $(document).ready(function() {
 
           chatChannel.watch(function (data) {
                $('#messages-list').append('<li>' + data + '</li>');
-               // update the channel panel
                var channelName = '#channels-list#' + data.UserChannel;
                $(channelName).text(data);
-               // update the channel panel
                $('div#messages-div').scrollTop(
                    $('div#messages-div')[0].scrollHeight);
           });
