@@ -16,15 +16,16 @@ $(document).ready(function() {
             var email = $('#Email').val();
             var username = $('#Username').val();
             var userpass = $('#Password').val();
-            
+
             var user = {
               fName: firstName,
               lName: lastName,
-              email: email,
               uName: username,
               password: userpass
+              email: email,
+              Departments: []
             };
-            
+
             socket.emit('register', user, function (err) {
                 if (err) {
                     console.log(err);
